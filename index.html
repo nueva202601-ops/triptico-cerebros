@@ -1292,6 +1292,236 @@ body::after{
 @keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
 .cursor{display:inline-block;width:2px;height:16px;background:var(--blue);vertical-align:text-bottom;animation:blink 1s step-end infinite;margin-left:1px}
 
+}
+.tour-toast.show{transform:translateX(-50%) translateY(0)}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+.cursor{display:inline-block;width:2px;height:16px;background:var(--blue);vertical-align:text-bottom;animation:blink 1s step-end infinite;margin-left:1px}
+
+/* ─── SINGLE PANEL NAVIGATION ────────────────────────── */
+.panel-nav-bar{
+  display:flex;align-items:center;justify-content:space-between;
+  background:var(--glass-bg);backdrop-filter:blur(16px);
+  border:1px solid var(--glass-border);border-radius:var(--radius-lg);
+  padding:10px 18px;box-shadow:var(--glass-shadow);
+  margin-bottom:18px;gap:12px;
+}
+.pnb-left,.pnb-right{flex-shrink:0}
+.pnb-center{display:flex;flex-direction:column;align-items:center;gap:6px;flex:1}
+.pnb-label{font-family:var(--font-mono);font-size:10px;color:var(--gray-400);letter-spacing:1px}
+.pnb-dots{display:flex;gap:5px;align-items:center}
+.pnb-dot{width:6px;height:6px;border-radius:50%;background:rgba(0,102,255,0.18);transition:all .3s cubic-bezier(.34,1.56,.64,1);cursor:pointer}
+.pnb-dot:hover{background:rgba(0,102,255,0.4);transform:scale(1.2)}
+.pnb-dot.active{background:linear-gradient(135deg,var(--blue),var(--cyan));width:20px;border-radius:4px;box-shadow:0 0 8px rgba(0,102,255,0.4)}
+.pnb-back-btn,.pnb-next-btn{
+  display:flex;align-items:center;gap:5px;padding:8px 16px;
+  border-radius:var(--radius-sm);border:none;cursor:pointer;
+  font-family:var(--font-sans);font-size:12px;font-weight:700;
+  transition:all .25s cubic-bezier(.34,1.56,.64,1);
+}
+.pnb-back-btn{background:rgba(0,102,255,0.06);color:var(--blue);border:1px solid rgba(0,102,255,0.15)}
+.pnb-back-btn:hover:not(:disabled){background:rgba(0,102,255,0.12);transform:translateX(-2px)}
+.pnb-back-btn:disabled{opacity:0.3;cursor:not-allowed}
+.pnb-next-btn{background:linear-gradient(135deg,var(--blue),var(--electric));color:#fff;box-shadow:0 4px 14px rgba(0,102,255,0.35)}
+.pnb-next-btn:hover{transform:translateX(2px);box-shadow:0 6px 20px rgba(0,102,255,0.5)}
+.pnb-next-btn:disabled{opacity:0.3;cursor:not-allowed;transform:none}
+
+.single-panel-wrap{position:relative;max-width:540px;margin:0 auto}
+.single-panel-container{position:relative;width:100%}
+.sp-panel{
+  display:none;background:var(--glass-bg);
+  backdrop-filter:blur(24px) saturate(180%);-webkit-backdrop-filter:blur(24px) saturate(180%);
+  border:1px solid var(--glass-border);border-radius:var(--radius-xl);
+  padding:28px 24px 24px;position:relative;overflow:hidden;
+  box-shadow:var(--glass-shadow);min-height:600px;flex-direction:column;
+}
+.sp-panel.active{display:flex}
+.sp-panel::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,transparent,var(--blue),var(--cyan),transparent)}
+@keyframes spEnterRight{0%{opacity:0;transform:translateX(40px) scale(0.97)}100%{opacity:1;transform:translateX(0) scale(1)}}
+@keyframes spEnterLeft{0%{opacity:0;transform:translateX(-40px) scale(0.97)}100%{opacity:1;transform:translateX(0) scale(1)}}
+@keyframes spExitLeft{0%{opacity:1;transform:translateX(0) scale(1)}100%{opacity:0;transform:translateX(-40px) scale(0.97)}}
+@keyframes spExitRight{0%{opacity:1;transform:translateX(0) scale(1)}100%{opacity:0;transform:translateX(40px) scale(0.97)}}
+.sp-panel.anim-in-right{animation:spEnterRight .42s cubic-bezier(.2,0,.4,1) forwards}
+.sp-panel.anim-in-left{animation:spEnterLeft .42s cubic-bezier(.2,0,.4,1) forwards}
+.sp-panel.anim-out-left{animation:spExitLeft .32s cubic-bezier(.4,0,.6,1) forwards}
+.sp-panel.anim-out-right{animation:spExitRight .32s cubic-bezier(.4,0,.6,1) forwards}
+
+.panel-next-arrow{
+  position:absolute;top:14px;right:14px;z-index:20;
+  width:34px;height:34px;border-radius:50%;
+  background:linear-gradient(135deg,var(--blue),var(--electric));
+  color:#fff;display:flex;align-items:center;justify-content:center;
+  cursor:pointer;box-shadow:0 4px 14px rgba(0,102,255,0.4);
+  transition:all .25s cubic-bezier(.34,1.56,.64,1);
+}
+.panel-next-arrow:hover{transform:scale(1.15) translateX(2px);box-shadow:0 6px 20px rgba(0,102,255,0.55)}
+.panel-next-arrow:active{transform:scale(0.95)}
+.panel-prev-arrow{
+  position:absolute;top:14px;left:14px;z-index:20;
+  width:34px;height:34px;border-radius:50%;
+  background:rgba(255,255,255,0.85);
+  border:1.5px solid rgba(0,102,255,0.25);
+  color:var(--blue);display:flex;align-items:center;justify-content:center;
+  cursor:pointer;box-shadow:0 3px 12px rgba(0,102,255,0.15);
+  transition:all .25s cubic-bezier(.34,1.56,.64,1);
+  backdrop-filter:blur(8px);
+}
+.panel-prev-arrow:hover{transform:scale(1.12) translateX(-2px);box-shadow:0 5px 18px rgba(0,102,255,0.3);background:var(--blue-xl)}
+.panel-prev-arrow:active{transform:scale(0.95)}
+
+.temas-btn{
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  width:100%;padding:12px 18px;border-radius:var(--radius);
+  background:linear-gradient(135deg,rgba(0,102,255,0.07),rgba(0,200,224,0.07));
+  border:1.5px solid rgba(0,200,224,0.35);color:#007d8a;
+  font-family:var(--font-sans);font-size:13px;font-weight:700;
+  text-decoration:none;margin:14px 0 10px;
+  transition:all .25s cubic-bezier(.34,1.56,.64,1);cursor:pointer;
+  position:relative;overflow:hidden;
+}
+.temas-btn:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(0,200,224,0.25);border-color:rgba(0,200,224,0.6);color:#005f6b}
+.restart-btn{
+  display:flex;align-items:center;justify-content:center;gap:7px;
+  width:100%;padding:11px;border-radius:var(--radius-sm);
+  background:rgba(0,102,255,0.06);border:1px solid rgba(0,102,255,0.15);
+  color:var(--blue);font-family:var(--font-sans);font-size:12px;font-weight:700;
+  cursor:pointer;margin:12px 0 10px;transition:all .25s cubic-bezier(.34,1.56,.64,1);
+}
+.restart-btn:hover{background:rgba(0,102,255,0.12);transform:translateY(-1px)}
+/* ─── PILLARS GRID ────────────────────────────────────── */
+.pillars-grid{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:8px}
+.pillar-item{background:rgba(255,255,255,0.6);border:1px solid rgba(0,102,255,0.1);border-radius:var(--radius-sm);padding:10px;display:flex;flex-direction:column;align-items:center;text-align:center;gap:4px;transition:all .2s}
+.pillar-item:hover{border-color:rgba(0,102,255,0.25);box-shadow:0 3px 12px rgba(0,102,255,0.1);transform:translateY(-2px)}
+.pillar-full{grid-column:1/-1;flex-direction:row;text-align:left;gap:10px;align-items:flex-start}
+.pillar-icon{font-size:24px;display:block}
+.pillar-full .pillar-icon{font-size:22px;flex-shrink:0;margin-top:2px}
+.pillar-name{font-size:10.5px;font-weight:700;color:var(--ink)}
+.pillar-desc{font-size:9.5px;color:var(--gray-400);line-height:1.4}
+
+
+/* ─── OPEN TRIPTYCH VIEW (Panel 7) ───────────────────── */
+.open-tri-toggle{
+  display:flex;align-items:center;justify-content:center;gap:10px;
+  margin-bottom:14px;
+  background:rgba(255,255,255,0.6);
+  border:1px solid rgba(0,102,255,0.12);
+  border-radius:var(--radius-lg);padding:6px;
+}
+.ot-btn{
+  padding:8px 18px;border-radius:var(--radius-sm);
+  border:none;cursor:pointer;font-family:var(--font-sans);
+  font-size:11px;font-weight:700;
+  background:transparent;color:var(--blue);
+  transition:all .25s cubic-bezier(.34,1.56,.64,1);
+}
+.ot-btn.ot-active{
+  background:linear-gradient(135deg,var(--blue),var(--electric));
+  color:#fff;box-shadow:0 3px 12px rgba(0,102,255,0.35);
+}
+.ot-toggle-label{font-size:9px;color:var(--gray-400);font-weight:600;letter-spacing:1px;text-transform:uppercase}
+
+.open-triptych{
+  display:grid;grid-template-columns:1fr 1fr 1fr;
+  gap:0;border-radius:var(--radius-lg);overflow:hidden;
+  border:1px solid rgba(0,102,255,0.15);
+  box-shadow:0 8px 32px rgba(0,66,204,0.1);
+  transition:opacity .3s, transform .3s;
+}
+
+.ot-panel{
+  background:rgba(255,255,255,0.75);
+  backdrop-filter:blur(12px);
+  padding:12px 10px;
+  position:relative;min-height:380px;
+  display:flex;flex-direction:column;gap:6px;
+}
+.ot-panel:not(:last-child){border-right:1px solid rgba(0,102,255,0.1)}
+
+/* Panel number badge */
+.ot-panel-num{
+  font-family:var(--font-mono);font-size:8px;font-weight:700;
+  color:var(--blue);letter-spacing:1.5px;
+  padding:2px 7px;border-radius:4px;
+  background:var(--blue-xl);border:1px solid rgba(0,102,255,0.15);
+  display:inline-block;width:fit-content;margin-bottom:4px;
+}
+.conclusion-num{background:rgba(0,200,224,0.1);border-color:rgba(0,200,224,0.3);color:#007d8a}
+.portada-num{background:linear-gradient(135deg,var(--blue-xl),var(--cyan-xl));color:var(--blue)}
+.core-num{background:rgba(0,102,255,0.08);color:var(--electric)}
+
+.ot-panel-title{font-size:11px;font-weight:800;color:var(--ink);letter-spacing:-0.2px;line-height:1.2;margin-bottom:4px}
+
+/* Portada panel special */
+.ot-portada{
+  background:linear-gradient(170deg,rgba(0,66,204,0.07),rgba(0,200,224,0.05));
+  border-left:2px solid rgba(0,102,255,0.2);
+}
+.ot-portada-course{font-size:8px;font-weight:700;color:var(--blue);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:4px}
+.ot-portada-title{font-size:14px;font-weight:900;color:var(--ink);line-height:1.2;margin-bottom:4px;letter-spacing:-0.3px}
+.ot-portada-sub{font-size:9px;color:var(--gray-400);margin-bottom:8px}
+
+/* Conclusion panel */
+.ot-conclusion{background:linear-gradient(170deg,rgba(0,200,224,0.05),rgba(255,255,255,0.8))}
+.ot-core{background:linear-gradient(170deg,rgba(0,66,204,0.04),rgba(255,255,255,0.8))}
+
+/* Brains */
+.ot-brains{display:flex;justify-content:center;gap:6px;margin:8px 0}
+.ot-brain{text-align:center;font-size:16px;padding:6px 8px;border-radius:50%;background:rgba(0,102,255,0.06);border:1px solid rgba(0,102,255,0.15);line-height:1.3}
+.ot-brain small{font-size:7.5px;color:var(--blue);font-weight:700;display:block}
+.ot-brain.lim{background:rgba(0,200,224,0.06);border-color:rgba(0,200,224,0.2)}
+.ot-brain.neo{background:rgba(0,66,204,0.06)}
+
+/* Credits */
+.ot-credits{font-size:8.5px;color:var(--gray-600);line-height:1.8;margin-top:auto;padding-top:6px;border-top:1px solid rgba(0,102,255,0.08)}
+.ot-credits small{color:var(--gray-400);font-size:7.5px}
+
+/* Compare */
+.ot-compare{display:grid;grid-template-columns:1fr 1fr;gap:4px;margin:4px 0}
+.ot-col{background:rgba(255,255,255,0.5);border-radius:6px;padding:5px}
+.ot-col.digi-col{background:rgba(0,200,224,0.05)}
+.ot-col-head{font-size:8.5px;font-weight:800;margin-bottom:4px;text-transform:uppercase;letter-spacing:0.5px}
+.trad-h{color:var(--gray-600)}
+.digi-h{color:#007d8a}
+.ot-item{font-size:8px;color:var(--gray-600);padding:1.5px 0;border-bottom:1px solid rgba(0,0,0,0.03);line-height:1.4}
+
+.ot-pills{display:flex;flex-wrap:wrap;gap:3px;margin-top:4px}
+.ot-pill{font-size:7.5px;padding:2px 6px;border-radius:50px;background:var(--blue-xl);color:var(--blue);border:1px solid rgba(0,102,255,0.15);font-weight:600}
+
+/* Quote */
+.ot-quote{font-size:9px;color:var(--blue);font-style:italic;line-height:1.5;padding:7px;border-radius:6px;background:rgba(0,102,255,0.04);border-left:2px solid var(--blue)}
+.ot-quote span{font-size:8px;color:var(--gray-400);font-style:normal;display:block;margin-top:3px}
+
+/* Steps */
+.ot-steps{display:grid;grid-template-columns:1fr 1fr;gap:3px;margin-top:4px}
+.ot-step{font-size:8px;color:var(--gray-600);padding:3px 5px;border-radius:4px;background:rgba(0,102,255,0.04);border:1px solid rgba(0,102,255,0.08)}
+.ot-step span{font-family:var(--font-mono);font-weight:700;color:var(--blue);margin-right:3px}
+.ot-formula{font-family:var(--font-mono);font-size:13px;font-weight:800;text-align:center;padding:6px;margin-top:auto;background:linear-gradient(135deg,rgba(0,102,255,0.06),rgba(0,200,224,0.06));border-radius:6px;border:1px solid rgba(0,102,255,0.12)}
+.ot-formula{background:linear-gradient(90deg,var(--blue),var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+
+/* Chars */
+.ot-chars{display:flex;gap:6px;justify-content:center;margin:4px 0}
+.ot-char{text-align:center;font-size:16px;line-height:1.4;background:rgba(0,102,255,0.04);border-radius:8px;padding:6px 8px;border:1px solid rgba(0,102,255,0.1)}
+.ot-char b{display:block;font-size:9px;color:var(--ink)}
+.ot-char small{font-size:7.5px;color:var(--blue)}
+
+/* Brain cards interior */
+.ot-brains-row{display:flex;flex-direction:column;gap:3px;margin:4px 0}
+.ot-brain-card{font-size:8.5px;padding:5px 7px;border-radius:6px;color:var(--gray-600);border:1px solid;line-height:1.4}
+.ot-brain-card span{font-size:13px;margin-right:4px}
+.ot-brain-card b{display:inline;color:var(--ink)}
+.rep-c{background:rgba(0,102,255,0.05);border-color:rgba(0,102,255,0.2)}
+.lim-c{background:rgba(0,200,224,0.05);border-color:rgba(0,200,224,0.2)}
+.neo-c{background:rgba(0,66,204,0.05);border-color:rgba(0,66,204,0.2)}
+
+/* Flow */
+.ot-flow{display:flex;flex-direction:column;align-items:center;gap:1px;margin-top:4px}
+.ot-flow-step{font-size:8.5px;color:var(--gray-600);padding:4px 8px;border-radius:6px;background:rgba(0,102,255,0.04);border:1px solid rgba(0,102,255,0.1);width:100%;text-align:center}
+.ot-flow-step span{font-family:var(--font-mono);font-weight:700;color:var(--blue);margin-right:4px;padding:1px 5px;border-radius:4px;background:var(--blue-xl)}
+.ot-flow-arrow{font-size:10px;color:rgba(0,102,255,0.4);line-height:1}
+
+.ot-sub{font-size:8.5px;font-weight:700;color:var(--blue);text-transform:uppercase;letter-spacing:1px;margin-top:4px}
+.ot-mini-card{font-size:8.5px;color:var(--gray-600);padding:6px 8px;border-radius:6px;background:rgba(255,255,255,0.6);border:1px solid rgba(0,102,255,0.1);line-height:1.5}
+.ot-formula-sm{font-family:var(--font-mono);font-size:14px;font-weight:800;text-align:center;padding:6px;background:linear-gradient(135deg,rgba(0,102,255,0.06),rgba(0,200,224,0.06));border-radius:6px;border:1px solid rgba(0,102,255,0.12);background:linear-gradient(90deg,var(--blue),var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+
 /* ─── RESPONSIVE ──────────────────────────────────────── */
 @media(max-width:900px){
   .triptych{grid-template-columns:1fr}
@@ -1317,18 +1547,13 @@ body::after{
 ══════════════════════════════════════════════════ -->
 <div class="welcome-overlay" id="welcomeOverlay">
   <div class="welcome-card">
-    <div class="welcome-agency">
-      <span class="welcome-agency-dot"></span>
-      NEXUS CREATIVE AGENCY
-      <span class="welcome-agency-dot"></span>
-    </div>
 
     <div class="welcome-avatar">🧠</div>
 
     <div class="welcome-greeting">Bienvenido, Profesor</div>
     <div class="welcome-title">Jorge Alejandro<br><span>Solano Quesada</span></div>
     <p class="welcome-subtitle">
-      Este tríptico interactivo fue creado especialmente para usted como entregable de <strong>Mercadeo II</strong>. Explore los 3 cerebros, la historia de la Agencia NEXUS y el laboratorio de neuromarketing.
+      Este tríptico interactivo corresponde a la <strong>Tarea #1 de Mercadeo II</strong>. Lo invito a que explore los diferentes paneles que muestran el tema de distintas maneras.
     </p>
 
     <div class="welcome-actions">
@@ -1371,16 +1596,6 @@ body::after{
 </div>
 <div class="page-shimmer" id="pageShimmer"></div>
 
-<!-- Masterclass Legend Top Banner -->
-<div class="masterclass-legend">
-  <div class="ml-icon">🎓</div>
-  <div class="ml-text"><span>Masterclass</span></div>
-  <div class="ml-sep">·</div>
-  <div class="ml-course">Teoría de los 3 Cerebros aplicada al Neuromarketing y la Estrategia Digital</div>
-  <div class="ml-sep">·</div>
-  <div class="ml-text"><span>Mercadeo II · 2026</span></div>
-</div>
-
 <div class="page">
 
   <!-- ══════════════════════════════════════════════════
@@ -1390,10 +1605,10 @@ body::after{
     <div class="header-badge">
       <span class="badge-dot"></span>
       <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
-      Masterclass · Mercadeo II · Tríptico Digital Interactivo · Junio 2026
+      Mercadeo II · Tríptico Digital Interactivo · Junio 2026
     </div>
     <h1 class="header-title">La Teoría de los 3 Cerebros</h1>
-    <p class="header-subtitle">Masterclass de Neuromarketing y Estrategia Digital · Agencia NEXUS Creative</p>
+    <p class="header-subtitle">Neuromarketing y Estrategia Digital · Mercadeo II</p>
     <div class="header-credits">
       <div class="credit-item"><strong>Creativo:</strong> Luis Diego Solís Ureña</div>
       <div class="credit-sep">|</div>
@@ -1426,37 +1641,264 @@ body::after{
   ══════════════════════════════════════════════════ -->
   <section id="section-triptico" class="panel-section active">
 
-    <!-- FLIP TOGGLE -->
-    <div style="display:flex;justify-content:center;margin-bottom:20px;gap:10px">
-      <button id="btn-exterior" class="flip-btn flip-btn-active" onclick="flipTriptico('exterior')" data-tip="Portada, Conclusión y Plan Estratégico">
-        ◑ &nbsp;Cara Exterior · Portada &amp; Conclusión
-      </button>
-      <button id="btn-interior" class="flip-btn flip-btn-inactive" onclick="flipTriptico('interior')" data-tip="Historia, 3 Cerebros y Neuromarketing">
-        ◐ &nbsp;Cara Interior · Desarrollo &amp; Teoría
-      </button>
+    <!-- PANEL PROGRESS BAR -->
+    <div class="panel-nav-bar">
+      <div class="pnb-left">
+        <button class="pnb-back-btn" id="pnbBack" onclick="panelPrev()" disabled>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+          Anterior
+        </button>
+      </div>
+      <div class="pnb-center">
+        <div class="pnb-dots" id="pnbDots"></div>
+        <div class="pnb-label" id="pnbLabel">Panel 1 de 6</div>
+      </div>
+      <div class="pnb-right">
+        <button class="pnb-next-btn" id="pnbNext" onclick="panelNext()">
+          Siguiente
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+        </button>
+      </div>
     </div>
 
-    <!-- BOOK FLIP CONTAINER -->
-    <div class="flip-container">
-      <div class="flip-book" id="flipBook">
-      <!-- EXTERIOR FACE -->
-      <div id="face-exterior" class="flip-face">
-      <div class="triptych">
-        <!-- Flow SVG -->
-        <svg class="flow-overlay" xmlns="http://www.w3.org/2000/svg" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:10">
-          <defs>
-            <linearGradient id="flowGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stop-color="rgba(0,102,255,0)"/>
-              <stop offset="40%" stop-color="rgba(0,102,255,0.18)"/>
-              <stop offset="60%" stop-color="rgba(0,200,224,0.18)"/>
-              <stop offset="100%" stop-color="rgba(0,200,224,0)"/>
-            </linearGradient>
-          </defs>
-          <path d="M33.3% 220 Q50% 260 66.6% 220" fill="none" stroke="url(#flowGrad)" stroke-width="1.5" stroke-dasharray="6,4" opacity="0.8"/>
-        </svg>
+    <!-- SINGLE PANEL DISPLAY -->
+    <div class="single-panel-wrap">
+      <div class="single-panel-container" id="singlePanelContainer">
 
-        <!-- PANEL E1: TRADICIONAL vs DIGITAL -->
-        <div class="panel panel-1">
+        <!-- ══ PANEL 1: PORTADA ══════════════════════════════ -->
+        <div class="sp-panel active" id="sp-1">
+          <div class="panel-next-arrow" onclick="panelNext()" data-tip="Ir al Panel 2">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+          </div>
+          <div class="panel-glow glow-br"></div>
+          <div class="section-meta">
+            <span class="panel-code">PORTADA</span>
+            <span class="panel-label">Junio 2026</span>
+          </div>
+
+          <div class="cover-hero">
+            <div class="cover-course">Mercadeo II · 2026</div>
+            <div class="cover-main">Mercadeo</div>
+            <div class="cover-roman">II</div>
+            <div class="cover-line"></div>
+            <div class="cover-topic">La Teoría de los 3 Cerebros</div>
+            <p style="font-size:11px;color:var(--gray-400);margin-top:10px">Neuromarketing y Estrategia Digital</p>
+          </div>
+
+          <div class="brain-trio">
+            <div class="brain-node bn-rep"><span class="bn-emoji">🦎</span><span class="bn-label">Reptil</span><span class="bn-sub">Instinto</span></div>
+            <div class="brain-node bn-lim"><span class="bn-emoji">💙</span><span class="bn-label" style="color:#007d8a">Límbico</span><span class="bn-sub">Emoción</span></div>
+            <div class="brain-node bn-neo"><span class="bn-emoji">🧠</span><span class="bn-label">Neocórtex</span><span class="bn-sub">Razón</span></div>
+          </div>
+
+          <div class="credits-panel">
+            <div class="credits-row"><div class="credits-key">Nombre del Creativo</div><div class="credits-val">Luis Diego Solís Ureña</div></div>
+            <div class="credits-row"><div class="credits-key">Profesor</div><div class="credits-val blue">Msc. Jorge Alejandro Solano Quesada</div></div>
+            <div class="credits-row" style="margin-top:8px;padding-top:8px;border-top:1px solid rgba(0,102,255,0.08)"><div class="credits-key">Curso</div><div class="credits-val">Mercadeo II · Universidad</div></div>
+          </div>
+
+          <div class="pills" style="margin-top:12px">
+            <span class="pill pill-blue">Neuromarketing</span>
+            <span class="pill pill-cyan">3 Cerebros</span>
+            <span class="pill pill-blue">DC = RC + MC</span>
+            <span class="pill pill-ghost">Estrategia Digital</span>
+          </div>
+
+          <div class="panel-footer">
+            <span class="footer-label">Portada · NEXUS</span>
+            <span class="footer-dot">01</span>
+          </div>
+        </div>
+
+        <!-- ══ PANEL 2: LA HISTORIA ══════════════════════════ -->
+        <div class="sp-panel" id="sp-2">
+          <div class="panel-prev-arrow" onclick="panelPrev()" data-tip="Volver a la Portada">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+          </div>
+          <div class="panel-next-arrow" onclick="panelNext()" data-tip="Ir al Panel 3">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+          </div>
+          <div class="panel-glow glow-tl"></div>
+          <div class="section-meta">
+            <span class="panel-code">PANEL · 02</span>
+            <span class="panel-label">Agencia NEXUS</span>
+          </div>
+          <h2 class="panel-title">La Historia Comienza</h2>
+          <p class="panel-desc">Mateo llega con sus apuntes de Mercadeo II. Sofía lo guía en los fundamentos del marketing moderno.</p>
+
+          <div class="char-grid">
+            <div class="char-card"><div class="char-avatar">👩‍💼</div><div class="char-name">Sofía</div><div class="char-role-label">Directora Creativa</div></div>
+            <div class="char-card"><div class="char-avatar">👨‍🎓</div><div class="char-name">Mateo</div><div class="char-role-label">Junior Mercadólogo</div></div>
+          </div>
+
+          <div class="glass-card">
+            <div class="card-title">¿Qué es verdaderamente Mercadeo?</div>
+            <div class="card-text">Es el proceso de <strong>anticipar y satisfacer necesidades humanas</strong>, comunicando valor genuino a través de productos, servicios y experiencias que conecten profundamente.</div>
+          </div>
+
+          <div class="glass-card">
+            <div class="card-title">Los 5 Pilares de Importancia</div>
+            <div class="pillars-grid">
+              <div class="pillar-item">
+                <div class="pillar-icon">💎</div>
+                <div class="pillar-name">Creación de Valor</div>
+                <div class="pillar-desc">Productos y servicios que satisfacen necesidades reales.</div>
+              </div>
+              <div class="pillar-item">
+                <div class="pillar-icon">👷</div>
+                <div class="pillar-name">Generación de Empleo</div>
+                <div class="pillar-desc">Impulsa la actividad económica y el trabajo.</div>
+              </div>
+              <div class="pillar-item">
+                <div class="pillar-icon">🏆</div>
+                <div class="pillar-name">Competitividad</div>
+                <div class="pillar-desc">Diferencia a la empresa en el mercado global.</div>
+              </div>
+              <div class="pillar-item">
+                <div class="pillar-icon">💡</div>
+                <div class="pillar-name">Fomento a la Innovación</div>
+                <div class="pillar-desc">Incentiva nuevos productos y soluciones.</div>
+              </div>
+              <div class="pillar-item pillar-full">
+                <div class="pillar-icon">🌱</div>
+                <div class="pillar-name">Desarrollo Sostenible</div>
+                <div class="pillar-desc">Prácticas éticas y responsables con el entorno.</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="stats-row">
+            <div class="stat-box"><div class="stat-num">5+</div><div class="stat-label">áreas de impacto</div></div>
+            <div class="stat-box"><div class="stat-num">360°</div><div class="stat-label">visión integral</div></div>
+          </div>
+
+          <div class="panel-footer">
+            <span class="footer-label">Historia · Inicio</span>
+            <span class="footer-dot">02</span>
+          </div>
+        </div>
+
+        <!-- ══ PANEL 3: LOS 3 CEREBROS ═══════════════════════ -->
+        <div class="sp-panel" id="sp-3">
+          <div class="panel-prev-arrow" onclick="panelPrev()" data-tip="Volver al Panel 2">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+          </div>
+          <div class="panel-next-arrow" onclick="panelNext()" data-tip="Ir al Panel 4">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+          </div>
+          <div class="panel-glow glow-tl"></div>
+          <div class="panel-glow glow-br"></div>
+          <div class="section-meta">
+            <span class="panel-code">PANEL · 03 · NÚCLEO</span>
+            <span class="panel-label">85% Reptiliano</span>
+          </div>
+          <h2 class="panel-title">Los 3 Cerebros de MacLean</h2>
+          <p class="panel-desc">¿Cómo tomamos decisiones de compra realmente? Para principiantes, sin tecnicismos.</p>
+
+          <div class="brain-trio" style="margin-bottom:16px">
+            <div class="brain-node bn-rep"><span class="bn-emoji">🦎</span><span class="bn-label">Reptiliano</span><span class="bn-sub">85% Peso</span></div>
+            <div class="brain-node bn-lim" style="width:82px;height:82px"><span class="bn-emoji">💙</span><span class="bn-label" style="color:#007d8a">Límbico</span><span class="bn-sub">Emoción</span></div>
+            <div class="brain-node bn-neo"><span class="bn-emoji">🧠</span><span class="bn-label">Neocórtex</span><span class="bn-sub">15% Peso</span></div>
+          </div>
+
+          <div class="glass-card">
+            <div class="card-title" style="color:var(--blue)">🦎 Cerebro Reptiliano · 85% de Peso</div>
+            <div class="card-text"><strong>Instinto puro, supervivencia</strong>, evitar dolor, búsqueda de placer y compra inmediata. El más antiguo (~500 M años). Reacciona a contrastes visuales y urgencia.</div>
+          </div>
+
+          <div class="glass-card">
+            <div class="card-title" style="color:#007d8a">💙 Cerebro Límbico · Motor Emocional</div>
+            <div class="card-text"><strong>Emociones, afecto, recuerdos y estatus social (Lovemark).</strong> Aquí el consumidor se enamora de la historia de la marca. Hippocampo + Amígdala.</div>
+          </div>
+
+          <div class="glass-card">
+            <div class="card-title" style="color:var(--electric)">🧠 Cerebro Neocórtex · 15% (Justificador)</div>
+            <div class="card-text"><strong>Lógica, palabras y datos numéricos</strong> para justificar el precio. La capa evolutiva más reciente. Analítico, pero no decide la compra primaria.</div>
+          </div>
+
+          <div class="flow-steps" style="margin-top:8px">
+            <div class="flow-step"><div class="flow-dot">1</div><div class="flow-text"><strong>Rex activa la atención:</strong> colores, contraste, movimiento visual.</div></div>
+            <div class="flow-step"><div class="flow-dot">2</div><div class="flow-text"><strong>Lyra conecta emocionalmente:</strong> historia, empatía, sensaciones.</div></div>
+            <div class="flow-step"><div class="flow-dot">3</div><div class="flow-text"><strong>Neo justifica la decisión:</strong> precio, datos, características técnicas.</div></div>
+          </div>
+
+          <!-- TEMAS / VIDEO / PPT BUTTONS -->
+          <a href="https://drive.google.com/file/d/1QpfvkMZHnmk1yt0rUpw-kkX1z34xjM7A/view?usp=sharing" target="_blank" class="temas-btn" rel="noopener">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>
+            Los 3 Cerebros de MacLean
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          </a>
+          <a href="The_Decision_Building.pdf" target="_blank" class="temas-btn ppt-btn" rel="noopener" style="background:linear-gradient(135deg,rgba(0,66,204,0.08),rgba(88,28,255,0.08));border-color:rgba(88,28,255,0.3);color:#4c1d95;margin-top:0">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+            Modo PPT · El Centro de Mando
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          </a>
+
+          <div class="panel-footer">
+            <span class="footer-label">Núcleo · 3 Cerebros</span>
+            <span class="footer-dot">03</span>
+          </div>
+        </div>
+
+        <!-- ══ PANEL 4: NEUROMARKETING ════════════════════════ -->
+        <div class="sp-panel" id="sp-4">
+          <div class="panel-prev-arrow" onclick="panelPrev()" data-tip="Volver al Panel 3">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+          </div>
+          <div class="panel-next-arrow" onclick="panelNext()" data-tip="Ir al Panel 5">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+          </div>
+          <div class="panel-glow glow-br"></div>
+          <div class="section-meta">
+            <span class="panel-code">PANEL · 04</span>
+            <span class="panel-label">Neurociencia Aplicada</span>
+          </div>
+          <h2 class="panel-title">Neuromarketing</h2>
+          <p class="panel-desc">La fusión perfecta entre neurociencia, psicología y marketing para entender el subconsciente.</p>
+
+          <div class="formula-box">
+            <div class="formula-label">La Fórmula del Subconsciente</div>
+            <div class="formula-eq">DC = RC + MC</div>
+            <div class="formula-desc">Decisión de Compra = Respuesta Consciente + Motivador Inconsciente</div>
+          </div>
+
+          <div class="glass-card">
+            <div class="card-title">Herramientas de Medición</div>
+            <div class="card-text"><strong>EEG</strong> · Mide actividad cerebral eléctrica<br><strong>fMRI</strong> · Escaneo de imágenes cerebrales<br><strong>Eye Tracking</strong> · Seguimiento de la mirada<br><strong>GSR</strong> · Conductancia de la piel (sudoración)</div>
+          </div>
+
+          <div class="glass-card">
+            <div class="card-title">El Poder de las Neuronas Espejo</div>
+            <div class="card-text"><strong>😊 Sonreír y contagiar energía:</strong> transmite entusiasmo.<br><strong>🏷️ Nombre de pila:</strong> genera vínculo inmediato de confianza.<br><strong>🔍 Comprender intención real:</strong> percibir cómo se siente el cliente.</div>
+          </div>
+
+          <div class="dialogue">
+            <div class="dialogue-who">Sofía — Directora Creativa</div>
+            <div class="dialogue-text">«El neuromarketing no es manipulación: es <strong>comprender profundamente</strong> al ser humano para ofrecerle soluciones que realmente lo ayuden a mejorar su vida.»</div>
+          </div>
+
+          <div class="conclusion-box">
+            <div class="conclusion-title">Síntesis: Lo que aprendimos</div>
+            <div class="conclusion-item"><div class="ci-icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div><div class="ci-text"><strong>El mercadeo</strong> crea valor, empleo e innovación sostenible.</div></div>
+            <div class="conclusion-item"><div class="ci-icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div><div class="ci-text"><strong>85%</strong> de las decisiones son inconscientes (reptiliano + límbico).</div></div>
+            <div class="conclusion-item"><div class="ci-icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div><div class="ci-text"><strong>Hablar a los 3 cerebros</strong> en orden correcto = venta garantizada.</div></div>
+            <div class="conclusion-item"><div class="ci-icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div><div class="ci-text"><strong>DC = RC + MC</strong> es la fórmula maestra del neuromarketing.</div></div>
+          </div>
+
+          <div class="panel-footer">
+            <span class="footer-label">Neurociencia · Aplicada</span>
+            <span class="footer-dot">04</span>
+          </div>
+        </div>
+
+        <!-- ══ PANEL 5: TRADICIONAL vs DIGITAL ═══════════════ -->
+        <div class="sp-panel" id="sp-5">
+          <div class="panel-prev-arrow" onclick="panelPrev()" data-tip="Volver al Panel 4">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+          </div>
+          <div class="panel-next-arrow" onclick="panelNext()" data-tip="Ir al Panel 6 · Conclusión">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+          </div>
           <div class="panel-glow glow-tl"></div>
           <div class="section-meta">
             <span class="panel-code">PANEL · 05</span>
@@ -1508,8 +1950,15 @@ body::after{
           </div>
         </div>
 
-        <!-- PANEL E2: CONCLUSIÓN -->
-        <div class="panel panel-2">
+        <!-- ══ PANEL 6: CONCLUSIÓN ════════════════════════════ -->
+        <div class="sp-panel" id="sp-6">
+          <!-- Arrows panel 6 -->
+          <div class="panel-prev-arrow" onclick="panelPrev()" data-tip="Volver al Panel 5">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+          </div>
+          <div class="panel-next-arrow" onclick="panelNext()" data-tip="Ver el Tríptico Impreso">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+          </div>
           <div class="panel-glow glow-tl"></div>
           <div class="panel-glow glow-br"></div>
           <div class="section-meta">
@@ -1548,264 +1997,151 @@ body::after{
           </div>
         </div>
 
-        <!-- PANEL E3: PORTADA -->
-        <div class="panel panel-3">
-          <div class="panel-glow glow-br"></div>
-          <div class="section-meta">
-            <span class="panel-code">PORTADA</span>
-            <span class="panel-label">Junio 2026</span>
+        <!-- ══ PANEL 7: TRÍPTICO ABIERTO (VISTA IMPRESA) ═════ -->
+        <div class="sp-panel" id="sp-7" style="max-width:100%;padding:20px 16px">
+          <!-- Arrows panel 7 -->
+          <div class="panel-prev-arrow" onclick="panelPrev()" data-tip="Volver al Panel 6">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
           </div>
-
-          <div class="cover-hero">
-            <div class="cover-course">Masterclass · Mercadeo</div>
-            <div class="cover-main">Mercadeo</div>
-            <div class="cover-roman">II</div>
-            <div class="cover-line"></div>
-            <div class="cover-topic">La Teoría de los 3 Cerebros</div>
-            <p style="font-size:11px;color:var(--gray-400);margin-top:10px">Neuromarketing y Estrategia Digital</p>
+          <div class="panel-next-arrow" onclick="goToPanel(1)" data-tip="Volver a la Portada">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-4.95"/></svg>
           </div>
-
-          <div class="brain-trio">
-            <div class="brain-node bn-rep">
-              <span class="bn-emoji">🦎</span>
-              <span class="bn-label">Reptil</span>
-              <span class="bn-sub">Instinto</span>
-            </div>
-            <div class="brain-node bn-lim">
-              <span class="bn-emoji">💙</span>
-              <span class="bn-label" style="color:#007d8a">Límbico</span>
-              <span class="bn-sub">Emoción</span>
-            </div>
-            <div class="brain-node bn-neo">
-              <span class="bn-emoji">🧠</span>
-              <span class="bn-label">Neocórtex</span>
-              <span class="bn-sub">Razón</span>
-            </div>
-          </div>
-
-          <div class="credits-panel">
-            <div class="credits-row">
-              <div class="credits-key">Nombre del Creativo</div>
-              <div class="credits-val">Luis Diego Solís Ureña</div>
-            </div>
-            <div class="credits-row">
-              <div class="credits-key">Profesor</div>
-              <div class="credits-val blue">Msc. Jorge Alejandro Solano Quesada</div>
-            </div>
-            <div class="credits-row">
-              <div class="credits-key">Agencia</div>
-              <div class="credits-val agency">NEXUS CREATIVE AGENCY</div>
-            </div>
-            <div class="credits-row" style="margin-top:8px;padding-top:8px;border-top:1px solid rgba(0,102,255,0.08)">
-              <div class="credits-key">Curso</div>
-              <div class="credits-val">Mercadeo II · Universidad</div>
-            </div>
-          </div>
-
-          <div class="pills" style="margin-top:12px">
-            <span class="pill pill-blue">Neuromarketing</span>
-            <span class="pill pill-cyan">3 Cerebros</span>
-            <span class="pill pill-blue">DC = RC + MC</span>
-            <span class="pill pill-ghost">Estrategia Digital</span>
-          </div>
-
-          <div class="panel-footer">
-            <span class="footer-label">Portada · NEXUS</span>
-            <span class="footer-dot">01</span>
-          </div>
-        </div>
-      </div>
-    </div>
-    </div><!-- /face-exterior -->
-
-    <!-- INTERIOR FACE -->
-    <div id="face-interior" class="flip-face" style="display:none">
-      <div class="triptych">
-        <!-- PANEL I1: LA HISTORIA -->
-        <div class="panel panel-1">
-          <div class="panel-glow glow-tl"></div>
-          <div class="section-meta">
-            <span class="panel-code">PANEL · 02</span>
-            <span class="panel-label">Agencia NEXUS</span>
-          </div>
-          <h2 class="panel-title">La Historia Comienza</h2>
-          <p class="panel-desc">Mateo llega con sus apuntes de Mercadeo II. Sofía lo guía en los fundamentos del marketing moderno.</p>
-
-          <div class="char-grid">
-            <div class="char-card">
-              <div class="char-avatar">👩‍💼</div>
-              <div class="char-name">Sofía</div>
-              <div class="char-role-label">Directora Creativa</div>
-            </div>
-            <div class="char-card">
-              <div class="char-avatar">👨‍🎓</div>
-              <div class="char-name">Mateo</div>
-              <div class="char-role-label">Junior Mercadólogo</div>
-            </div>
-          </div>
-
-          <div class="glass-card">
-            <div class="card-title">¿Qué es verdaderamente Mercadeo?</div>
-            <div class="card-text">Es el proceso de <strong>anticipar y satisfacer necesidades humanas</strong>, comunicando valor genuino a través de productos, servicios y experiencias que conecten profundamente.</div>
-          </div>
-
-          <div class="glass-card">
-            <div class="card-title">Los 5 Pilares de Importancia</div>
-            <div class="card-text">
-              <strong>1.</strong> Creación de Valor &nbsp;·&nbsp; <strong>2.</strong> Generación de Empleo &nbsp;·&nbsp; <strong>3.</strong> Competitividad Empresarial &nbsp;·&nbsp; <strong>4.</strong> Fomento a la Innovación &nbsp;·&nbsp; <strong>5.</strong> Desarrollo Sostenible
-            </div>
-          </div>
-
-          <div class="dialogue">
-            <div class="dialogue-who">Mateo — Junior</div>
-            <div class="dialogue-text">«¡Hola Sofía! Salí de la Masterclass del profesor Solano con muchísimas notas. Quiero organizarlo todo en un diseño <strong>inolvidable</strong> para nuestros clientes.»</div>
-          </div>
-
-          <div class="stats-row">
-            <div class="stat-box"><div class="stat-num">5+</div><div class="stat-label">áreas de impacto</div></div>
-            <div class="stat-box"><div class="stat-num">360°</div><div class="stat-label">visión integral</div></div>
-          </div>
-
-          <div class="panel-footer">
-            <span class="footer-label">Historia · Inicio</span>
-            <span class="footer-dot">02</span>
-          </div>
-        </div>
-
-        <!-- PANEL I2: LOS 3 CEREBROS -->
-        <div class="panel panel-2">
           <div class="panel-glow glow-tl"></div>
           <div class="panel-glow glow-br"></div>
-          <div class="section-meta">
-            <span class="panel-code">PANEL · 03 · NÚCLEO</span>
-            <span class="panel-label">85% Reptiliano</span>
-          </div>
-          <h2 class="panel-title">Los 3 Cerebros de MacLean</h2>
-          <p class="panel-desc">¿Cómo tomamos decisiones de compra realmente? Para principiantes, sin tecnicismos.</p>
 
-          <div class="brain-trio" style="margin-bottom:16px">
-            <div class="brain-node bn-rep">
-              <span class="bn-emoji">🦎</span>
-              <span class="bn-label">Reptiliano</span>
-              <span class="bn-sub">85% Peso</span>
-            </div>
-            <div class="brain-node bn-lim" style="width:82px;height:82px">
-              <span class="bn-emoji">💙</span>
-              <span class="bn-label" style="color:#007d8a">Límbico</span>
-              <span class="bn-sub">Emoción</span>
-            </div>
-            <div class="brain-node bn-neo">
-              <span class="bn-emoji">🧠</span>
-              <span class="bn-label">Neocórtex</span>
-              <span class="bn-sub">15% Peso</span>
-            </div>
+          <div class="section-meta" style="margin-bottom:10px">
+            <span class="panel-code">VISTA IMPRESA · TRÍPTICO ABIERTO</span>
+            <span class="panel-label">Construcción lógica</span>
+          </div>
+          <h2 class="panel-title" style="font-size:18px;margin-bottom:4px">Tríptico Completo · Vista Impresa</h2>
+          <p class="panel-desc" style="margin-bottom:14px">Así se vería el tríptico físico desplegado: 3 paneles por cara, con construcción lógica de lectura tanto en exterior como en interior.</p>
+
+          <!-- FLIP TOGGLE for open triptych -->
+          <div class="open-tri-toggle">
+            <button id="ot-btn-ext" class="ot-btn ot-active" onclick="openTriFlip('exterior')">
+              ◑ Cara Exterior
+            </button>
+            <div class="ot-toggle-label">Cara del tríptico</div>
+            <button id="ot-btn-int" class="ot-btn" onclick="openTriFlip('interior')">
+              Cara Interior ◐
+            </button>
           </div>
 
-          <div class="glass-card">
-            <div class="card-title" style="color:var(--blue)">🦎 Cerebro Reptiliano · 85% de Peso</div>
-            <div class="card-text"><strong>Instinto puro, supervivencia</strong>, evitar dolor, búsqueda de placer y compra inmediata. El más antiguo (~500 M años). Reacciona a contrastes visuales y urgencia.</div>
-          </div>
-
-          <div class="glass-card">
-            <div class="card-title" style="color:#007d8a">💙 Cerebro Límbico · Motor Emocional</div>
-            <div class="card-text"><strong>Emociones, afecto, recuerdos y estatus social (Lovemark).</strong> Aquí el consumidor se enamora de la historia de la marca. Hippocampo + Amígdala.</div>
-          </div>
-
-          <div class="glass-card">
-            <div class="card-title" style="color:var(--electric)">🧠 Cerebro Neocórtex · 15% (Justificador)</div>
-            <div class="card-text"><strong>Lógica, palabras y datos numéricos</strong> para justificar el precio. La capa evolutiva más reciente. Analítico, pero no decide la compra primaria.</div>
-          </div>
-
-          <div class="flow-steps" style="margin-top:8px">
-            <div class="flow-step">
-              <div class="flow-dot">1</div>
-              <div class="flow-text"><strong>Rex activa la atención:</strong> colores, contraste, movimiento visual.</div>
+          <!-- OPEN TRIPTYCH: EXTERIOR -->
+          <div id="ot-exterior" class="open-triptych">
+            <div class="ot-panel ot-p1">
+              <div class="ot-panel-num">05</div>
+              <div class="ot-panel-title">Tradicional vs. Digital</div>
+              <div class="ot-compare">
+                <div class="ot-col">
+                  <div class="ot-col-head trad-h">📺 Tradicional</div>
+                  <div class="ot-item">Publicidad masiva: TV, radio, prensa.</div>
+                  <div class="ot-item">Comunicación unidireccional.</div>
+                  <div class="ot-item">Segmentación limitada.</div>
+                  <div class="ot-item">Medición aproximada.</div>
+                  <div class="ot-item">Costos elevados.</div>
+                </div>
+                <div class="ot-col digi-col">
+                  <div class="ot-col-head digi-h">⚡ Digital</div>
+                  <div class="ot-item">Canales en internet y redes.</div>
+                  <div class="ot-item">Interacción bidireccional.</div>
+                  <div class="ot-item">Segmentación hiper-precisa.</div>
+                  <div class="ot-item">ROI en tiempo real.</div>
+                  <div class="ot-item">Optimización continua.</div>
+                </div>
+              </div>
+              <div class="ot-sub">Botones de Supervivencia</div>
+              <div class="ot-pills">
+                <span class="ot-pill">🏆 Reconocimiento</span><span class="ot-pill">🛡️ Seguridad</span>
+                <span class="ot-pill">🧭 Libertad</span><span class="ot-pill">✨ Placer</span>
+                <span class="ot-pill">☕ Confort</span><span class="ot-pill">👥 Pertenencia</span>
+              </div>
             </div>
-            <div class="flow-step">
-              <div class="flow-dot">2</div>
-              <div class="flow-text"><strong>Lyra conecta emocionalmente:</strong> historia, empatía, sensaciones.</div>
+
+            <div class="ot-panel ot-p2 ot-conclusion">
+              <div class="ot-panel-num conclusion-num">06</div>
+              <div class="ot-panel-title">El Arte de Conectar</div>
+              <div class="ot-quote">«El 85% de la compra radica en el cerebro reptiliano y las emociones límbicas.»<br><span>— Sofía, Directora Creativa</span></div>
+              <div class="ot-sub" style="margin-top:10px">Plan Estratégico · 6 Etapas</div>
+              <div class="ot-steps">
+                <div class="ot-step"><span>01</span> Diagnóstico FODA</div>
+                <div class="ot-step"><span>02</span> Misión y Visión</div>
+                <div class="ot-step"><span>03</span> Objetivos SMART</div>
+                <div class="ot-step"><span>04</span> Estrategias</div>
+                <div class="ot-step"><span>05</span> Recursos</div>
+                <div class="ot-step"><span>06</span> Control KPIs</div>
+              </div>
+              <div class="ot-formula">DC = RC + MC</div>
             </div>
-            <div class="flow-step">
-              <div class="flow-dot">3</div>
-              <div class="flow-text"><strong>Neo justifica la decisión:</strong> precio, datos, características técnicas.</div>
+
+            <div class="ot-panel ot-p3 ot-portada">
+              <div class="ot-panel-num portada-num">01</div>
+              <div class="ot-portada-course">Mercadeo II · 2026</div>
+              <div class="ot-portada-title">La Teoría de los<br><strong>3 Cerebros</strong></div>
+              <div class="ot-portada-sub">Neuromarketing y Estrategia Digital</div>
+              <div class="ot-brains">
+                <div class="ot-brain rep">🦎<br><small>Reptil</small></div>
+                <div class="ot-brain lim">💙<br><small>Límbico</small></div>
+                <div class="ot-brain neo">🧠<br><small>Neocórtex</small></div>
+              </div>
+              <div class="ot-credits">
+                <div><small>Creativo:</small> Luis Diego Solís Ureña</div>
+                <div><small>Profesor:</small> Msc. J. A. Solano Q.</div>
+                              </div>
             </div>
           </div>
 
-          <div class="panel-footer">
-            <span class="footer-label">Núcleo · 3 Cerebros</span>
-            <span class="footer-dot">03</span>
+          <!-- OPEN TRIPTYCH: INTERIOR -->
+          <div id="ot-interior" class="open-triptych" style="display:none">
+            <div class="ot-panel ot-p1">
+              <div class="ot-panel-num">02</div>
+              <div class="ot-panel-title">La Historia Comienza</div>
+              <div class="ot-chars">
+                <div class="ot-char">👩‍💼<br><b>Sofía</b><br><small>Directora Creativa</small></div>
+                <div class="ot-char">👨‍🎓<br><b>Mateo</b><br><small>Junior Mercadólogo</small></div>
+              </div>
+              <div class="ot-mini-card"><strong>¿Qué es Mercadeo?</strong><br>Proceso de anticipar y satisfacer necesidades humanas comunicando valor.</div>
+              <div class="ot-mini-card"><strong>5 Pilares:</strong> Valor · Empleo · Competitividad · Innovación · Sostenibilidad</div>
+            </div>
+
+            <div class="ot-panel ot-p2 ot-core">
+              <div class="ot-panel-num core-num">03</div>
+              <div class="ot-panel-title">Los 3 Cerebros de MacLean</div>
+              <div class="ot-brains-row">
+                <div class="ot-brain-card rep-c"><span>🦎</span><b>Reptiliano</b><br>85% · Instinto · Supervivencia</div>
+                <div class="ot-brain-card lim-c"><span>💙</span><b>Límbico</b><br>Emoción · Lovemark</div>
+                <div class="ot-brain-card neo-c"><span>🧠</span><b>Neocórtex</b><br>15% · Lógica · Justificación</div>
+              </div>
+              <div class="ot-flow">
+                <div class="ot-flow-step"><span>1</span> Rex activa atención</div>
+                <div class="ot-flow-arrow">↓</div>
+                <div class="ot-flow-step"><span>2</span> Lyra conecta emoción</div>
+                <div class="ot-flow-arrow">↓</div>
+                <div class="ot-flow-step"><span>3</span> Neo justifica decisión</div>
+              </div>
+            </div>
+
+            <div class="ot-panel ot-p3">
+              <div class="ot-panel-num">04</div>
+              <div class="ot-panel-title">Neuromarketing</div>
+              <div class="ot-formula-sm">DC = RC + MC</div>
+              <div class="ot-mini-card"><strong>Herramientas:</strong><br>EEG · fMRI · Eye Tracking · GSR</div>
+              <div class="ot-mini-card"><strong>Neuronas Espejo:</strong><br>😊 Energía · 🏷️ Nombre de pila · 🔍 Empatía</div>
+              <div class="ot-mini-card" style="background:rgba(0,102,255,0.06)"><strong>Síntesis:</strong> El 85% es inconsciente. Hablar a los 3 cerebros = venta garantizada.</div>
+            </div>
+          </div>
+
+          <div class="panel-footer" style="margin-top:16px">
+            <span class="footer-label">Vista Impresa · Tríptico Completo</span>
+            <span class="footer-dot">07</span>
           </div>
         </div>
 
-        <!-- PANEL I3: NEUROMARKETING -->
-        <div class="panel panel-3">
-          <div class="panel-glow glow-br"></div>
-          <div class="section-meta">
-            <span class="panel-code">PANEL · 04</span>
-            <span class="panel-label">Neurociencia Aplicada</span>
-          </div>
-          <h2 class="panel-title">Neuromarketing</h2>
-          <p class="panel-desc">La fusión perfecta entre neurociencia, psicología y marketing para entender el subconsciente.</p>
-
-          <div class="formula-box">
-            <div class="formula-label">La Fórmula del Subconsciente</div>
-            <div class="formula-eq">DC = RC + MC</div>
-            <div class="formula-desc">Decisión de Compra = Respuesta Consciente + Motivador Inconsciente</div>
-          </div>
-
-          <div class="glass-card">
-            <div class="card-title">Herramientas de Medición</div>
-            <div class="card-text">
-              <strong>EEG</strong> · Mide actividad cerebral eléctrica<br>
-              <strong>fMRI</strong> · Escaneo de imágenes cerebrales<br>
-              <strong>Eye Tracking</strong> · Seguimiento de la mirada<br>
-              <strong>GSR</strong> · Conductancia de la piel (sudoración)
-            </div>
-          </div>
-
-          <div class="glass-card">
-            <div class="card-title">El Poder de las Neuronas Espejo</div>
-            <div class="card-text">
-              <strong>😊 Sonreír y contagiar energía:</strong> transmite entusiasmo.<br>
-              <strong>🏷️ Nombre de pila:</strong> genera vínculo inmediato de confianza.<br>
-              <strong>🔍 Comprender intención real:</strong> percibir cómo se siente el cliente.
-            </div>
-          </div>
-
-          <div class="dialogue">
-            <div class="dialogue-who">Sofía — Directora Creativa</div>
-            <div class="dialogue-text">«El neuromarketing no es manipulación: es <strong>comprender profundamente</strong> al ser humano para ofrecerle soluciones que realmente lo ayuden a mejorar su vida.»</div>
-          </div>
-
-          <div class="conclusion-box">
-            <div class="conclusion-title">Síntesis: Lo que aprendimos</div>
-            <div class="conclusion-item">
-              <div class="ci-icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
-              <div class="ci-text"><strong>El mercadeo</strong> crea valor, empleo e innovación sostenible.</div>
-            </div>
-            <div class="conclusion-item">
-              <div class="ci-icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
-              <div class="ci-text"><strong>85%</strong> de las decisiones son inconscientes (reptiliano + límbico).</div>
-            </div>
-            <div class="conclusion-item">
-              <div class="ci-icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
-              <div class="ci-text"><strong>Hablar a los 3 cerebros</strong> en orden correcto = venta garantizada.</div>
-            </div>
-            <div class="conclusion-item">
-              <div class="ci-icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
-              <div class="ci-text"><strong>DC = RC + MC</strong> es la fórmula maestra del neuromarketing.</div>
-            </div>
-          </div>
-
-          <div class="panel-footer">
-            <span class="footer-label">Neurociencia · Aplicada</span>
-            <span class="footer-dot">04</span>
-          </div>
-        </div>
-      </div>
-    </div>
+      </div><!-- /singlePanelContainer -->
+    </div><!-- /single-panel-wrap -->
 
   </section>
+
 
   <!-- ══════════════════════════════════════════════════
        SECTION 2: STORY MODE
@@ -1842,6 +2178,9 @@ body::after{
       <button class="story-auto-btn" id="btnAuto" onclick="storyToggleAuto()">
         <span id="autoIcon">▶</span> Reproducir
       </button>
+      <button class="story-auto-btn" onclick="storyRestart()" style="border-color:rgba(0,102,255,0.3);color:var(--blue)" data-tip="Reiniciar conversación desde el inicio">
+        ↺ Reiniciar
+      </button>
     </div>
   </section>
 
@@ -1852,10 +2191,10 @@ body::after{
     <div class="lab-hero">
       <div class="lab-badge">
         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3H5a2 2 0 0 0-2 2v4m6-6h10a2 2 0 0 1 2 2v4M9 3v18m0 0h10a2 2 0 0 0 2-2V9M9 21H5a2 2 0 0 1-2-2V9m0 0h18"/></svg>
-        Laboratorio Interactivo · NEXUS Creative
+        Laboratorio Interactivo · Mercadeo II
       </div>
       <div class="lab-title">Teoría de los 3 Cerebros &amp; Neuroventas</div>
-      <p class="lab-desc">Experimenta en vivo los conceptos de la Masterclass de <strong>Mercadeo II</strong>. Diseñado para entender el subconsciente sin tecnicismos.</p>
+      <p class="lab-desc">Experimenta en vivo los conceptos de <strong>Mercadeo II</strong>. Diseñado para entender el subconsciente sin tecnicismos.</p>
     </div>
 
     <!-- Brain Selector -->
@@ -2003,53 +2342,99 @@ function showSection(id, btn){
   if(id==='lab'){renderBrainDetail('reptiliano');renderSlabDetail(0);}
 }
 
-/* ─── TRIPTYCH FLIP WITH PAGE TURN ───────────────────── */
-let currentFace = 'exterior';
-function flipTriptico(face){
-  if(face === currentFace) return;
-  const extBtn  = document.getElementById('btn-exterior');
-  const intBtn  = document.getElementById('btn-interior');
-  const extFace = document.getElementById('face-exterior');
-  const intFace = document.getElementById('face-interior');
+/* ─── SINGLE PANEL NAVIGATION ─────────────────────────── */
+const TOTAL_PANELS = 7;
+let currentPanel = 1;
+
+function buildPanelDots(){
+  const el = document.getElementById('pnbDots');
+  el.innerHTML = Array.from({length:TOTAL_PANELS},(_,i)=>
+    `<div class="pnb-dot ${i===0?'active':''}" onclick="goToPanel(${i+1})" data-tip="Panel ${i+1}"></div>`
+  ).join('');
+}
+
+function updatePanelUI(){
+  document.getElementById('pnbLabel').textContent = `Panel ${currentPanel} de ${TOTAL_PANELS}`;
+  document.getElementById('pnbBack').disabled = currentPanel === 1;
+  document.getElementById('pnbNext').disabled = currentPanel === TOTAL_PANELS;
+  document.querySelectorAll('.pnb-dot').forEach((d,i)=>d.classList.toggle('active',i===currentPanel-1));
+}
+
+function goToPanel(idx, direction){
+  if(idx < 1 || idx > TOTAL_PANELS || idx === currentPanel) return;
+  const dir = direction || (idx > currentPanel ? 'forward' : 'back');
+  const outClass = dir==='forward' ? 'anim-out-left' : 'anim-out-right';
+  const inClass  = dir==='forward' ? 'anim-in-right' : 'anim-in-left';
+
+  const shimmer = document.getElementById('pageShimmer');
+  shimmer.classList.remove('active');
+  void shimmer.offsetWidth;
+  shimmer.classList.add('active');
+
+  const current = document.getElementById(`sp-${currentPanel}`);
+  current.classList.add(outClass);
+
+  setTimeout(()=>{
+    current.classList.remove('active', outClass);
+    currentPanel = idx;
+    const next = document.getElementById(`sp-${currentPanel}`);
+    next.classList.add('active', inClass);
+    setTimeout(()=> next.classList.remove(inClass), 450);
+    updatePanelUI();
+    // Scroll to top of panel
+    document.querySelector('.single-panel-wrap').scrollIntoView({behavior:'smooth', block:'nearest'});
+  }, 320);
+
+  setTimeout(()=> shimmer.classList.remove('active'), 800);
+}
+
+function panelNext(){ if(currentPanel < TOTAL_PANELS) goToPanel(currentPanel+1,'forward') }
+function panelPrev(){ if(currentPanel > 1) goToPanel(currentPanel-1,'back') }
+
+/* ─── OPEN TRIPTYCH FLIP ──────────────────────────────── */
+let openTriFace = 'exterior';
+function openTriFlip(face){
+  if(face === openTriFace) return;
+  const ext = document.getElementById('ot-exterior');
+  const int = document.getElementById('ot-interior');
+  const extBtn = document.getElementById('ot-btn-ext');
+  const intBtn = document.getElementById('ot-btn-int');
   const shimmer = document.getElementById('pageShimmer');
 
-  // Shimmer effect
   shimmer.classList.remove('active');
   void shimmer.offsetWidth;
   shimmer.classList.add('active');
 
   if(face === 'interior'){
-    // Exterior exits left, interior enters from right
-    extFace.classList.add('anim-exit-left');
+    ext.style.opacity='0';ext.style.transform='translateX(-8px) scale(0.99)';
     setTimeout(()=>{
-      extFace.style.display = 'none';
-      extFace.classList.remove('anim-exit-left');
-      intFace.style.display = 'block';
-      intFace.classList.add('anim-enter-right');
-      setTimeout(()=> intFace.classList.remove('anim-enter-right'), 450);
-    }, 360);
-
-    intBtn.className = 'flip-btn flip-btn-active';
-    extBtn.className = 'flip-btn flip-btn-inactive';
-
+      ext.style.display='none';ext.style.opacity='';ext.style.transform='';
+      int.style.display='grid';int.style.opacity='0';int.style.transform='translateX(8px) scale(0.99)';
+      int.style.transition='all .35s ease';
+      void int.offsetWidth;
+      int.style.opacity='1';int.style.transform='';
+      setTimeout(()=>int.style.transition='',380);
+    },320);
+    intBtn.classList.add('ot-active');extBtn.classList.remove('ot-active');
   } else {
-    // Interior exits right, exterior enters from left
-    intFace.classList.add('anim-exit-right');
+    int.style.opacity='0';int.style.transform='translateX(8px) scale(0.99)';
     setTimeout(()=>{
-      intFace.style.display = 'none';
-      intFace.classList.remove('anim-exit-right');
-      extFace.style.display = 'block';
-      extFace.classList.add('anim-enter-left');
-      setTimeout(()=> extFace.classList.remove('anim-enter-left'), 450);
-    }, 360);
-
-    extBtn.className = 'flip-btn flip-btn-active';
-    intBtn.className = 'flip-btn flip-btn-inactive';
+      int.style.display='none';int.style.opacity='';int.style.transform='';
+      ext.style.display='grid';ext.style.opacity='0';ext.style.transform='translateX(-8px) scale(0.99)';
+      ext.style.transition='all .35s ease';
+      void ext.offsetWidth;
+      ext.style.opacity='1';ext.style.transform='';
+      setTimeout(()=>ext.style.transition='',380);
+    },320);
+    extBtn.classList.add('ot-active');intBtn.classList.remove('ot-active');
   }
-
-  currentFace = face;
-  setTimeout(()=> shimmer.classList.remove('active'), 800);
+  openTriFace = face;
+  setTimeout(()=>shimmer.classList.remove('active'),800);
 }
+
+// Init
+buildPanelDots();
+updatePanelUI();
 
 /* ─── STORY MODE ──────────────────────────────────────── */
 let storyIdx=0, autoTimer=null, typingTimer=null, isTyping=false;
@@ -2086,22 +2471,40 @@ function storyNext(){
 function storyPrev(){
   if(storyIdx>0){storyIdx--;renderStory(storyIdx);}
 }
+function storyRestart(){
+  // Stop autoplay if running
+  if(autoTimer){clearInterval(autoTimer);autoTimer=null;const b=document.getElementById('btnAuto');if(b){b.classList.remove('playing');b.innerHTML='<span id="autoIcon">▶</span> Reproducir';}}
+  // Stop typing
+  if(typingTimer){clearInterval(typingTimer);isTyping=false;}
+  storyIdx=0;
+  renderStory(0);
+}
 function storyToggleAuto(){
   const btn=document.getElementById('btnAuto');
-  const icon=document.getElementById('autoIcon');
   if(autoTimer){
     clearInterval(autoTimer);autoTimer=null;
-    btn.classList.remove('playing');icon.textContent='▶';
-    btn.querySelector('span').nextSibling.textContent=' Reproducir';
+    btn.classList.remove('playing');
+    btn.innerHTML='<span id="autoIcon">▶</span> Reproducir';
   } else {
-    btn.classList.add('playing');icon.textContent='⏸';
+    btn.classList.add('playing');
     btn.innerHTML='<span id="autoIcon">⏸</span> Pausar';
-    autoTimer=setInterval(()=>{
+    // If still typing, skip to full text first
+    if(isTyping){
+      clearInterval(typingTimer);isTyping=false;
+      document.getElementById('storyText').textContent=DIALOGUES[storyIdx].text;
+    }
+    const tick=()=>{
       if(!isTyping){
-        if(storyIdx<DIALOGUES.length-1){storyIdx++;renderStory(storyIdx);}
-        else{clearInterval(autoTimer);autoTimer=null;const b=document.getElementById('btnAuto');b.classList.remove('playing');b.innerHTML='<span id="autoIcon">▶</span> Reproducir';}
+        if(storyIdx<DIALOGUES.length-1){
+          storyIdx++;renderStory(storyIdx);
+        } else {
+          clearInterval(autoTimer);autoTimer=null;
+          const b=document.getElementById('btnAuto');
+          if(b){b.classList.remove('playing');b.innerHTML='<span id="autoIcon">▶</span> Reproducir';}
+        }
       }
-    },4500);
+    };
+    autoTimer=setInterval(tick,4800);
   }
 }
 renderStory(0);
@@ -2204,10 +2607,10 @@ const TOUR_STEPS = [
     arrow: 'arrow-top',
   },
   {
-    targetId: 'flipBtns',
+    targetId: 'pnbBack',
     icon: '📖',
-    title: 'Voltear el Tríptico',
-    desc: 'El tríptico tiene <strong>dos caras</strong> como un plegable real. Al hacer clic cambia con un <strong>efecto de vuelta de hoja</strong>. Pruébelo después del tour.',
+    title: 'Navegación Panel a Panel',
+    desc: 'El tríptico se lee en orden lógico: <strong>6 paneles secuenciales</strong> como un libro digital. Use los botones Anterior/Siguiente o haga clic en los puntos para saltar a cualquier panel.',
     position: 'below',
     arrow: 'arrow-top',
   },
@@ -2384,29 +2787,24 @@ function endTour(){
   toast.classList.add('show');
   setTimeout(()=>{
     toast.classList.remove('show');
-    // Return to triptico view
+    // Return to triptico panel 1
     showSection('triptico', document.querySelectorAll('.nav-tab')[0]);
+    goToPanel(1);
   }, 3200);
 }
 
 // Add IDs to key elements for tour targeting
 window.addEventListener('DOMContentLoaded',()=>{
-  // Nav tabs wrapper
   const nav = document.querySelector('.nav-tabs');
   if(nav) nav.id = 'navTabsEl';
 
-  // Flip buttons wrapper
-  const flipDiv = document.querySelector('.flip-btn')?.parentElement;
-  if(flipDiv) flipDiv.id = 'flipBtns';
+  // Panel nav bar for tour
+  const pnb = document.querySelector('.panel-nav-bar');
+  if(pnb) pnb.id = 'pnbBack'; // reuse id for tour target
 
-  // Story card
-  // already has id="storyCard"
-
-  // Lab hero
   const labHero = document.querySelector('.lab-hero');
   if(labHero) labHero.id = 'labHeroEl';
 
-  // Brain selector grid
   const brainSel = document.querySelector('.brain-selector-grid');
   if(brainSel) brainSel.id = 'brainSelectorEl';
 });
