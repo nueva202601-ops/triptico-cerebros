@@ -1,0 +1,1653 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tríptico Digital · La Teoría de los 3 Cerebros · Mercadeo II</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+/* ─── RESET ───────────────────────────────────────────── */
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+
+/* ─── DESIGN TOKENS ───────────────────────────────────── */
+:root{
+  --white:#ffffff;
+  --pearl:#f8f9fb;
+  --pearl2:#f0f2f6;
+  --pearl3:#e4e8f0;
+  --gray-200:#d0d5e0;
+  --gray-400:#9aa3b8;
+  --gray-600:#5a6478;
+  --gray-800:#2d3447;
+  --ink:#1a2035;
+  --blue:#0066ff;
+  --blue-l:#3385ff;
+  --blue-ll:#66a3ff;
+  --blue-xl:#e8f0ff;
+  --cyan:#00c8e0;
+  --cyan-l:#33d4e8;
+  --cyan-xl:#e0fafd;
+  --electric:#0044cc;
+
+  /* Glass system */
+  --glass-bg:rgba(255,255,255,0.72);
+  --glass-border:rgba(255,255,255,0.9);
+  --glass-shadow:0 8px 32px rgba(0,66,204,0.08),0 1px 4px rgba(0,0,0,0.06);
+  --glass-hover:rgba(255,255,255,0.88);
+
+  /* Data card accents */
+  --data-line:rgba(0,102,255,0.15);
+  --data-glow:rgba(0,200,224,0.12);
+
+  --radius-sm:8px;
+  --radius:12px;
+  --radius-lg:18px;
+  --radius-xl:24px;
+
+  --font-sans:'Inter',system-ui,sans-serif;
+  --font-mono:'JetBrains Mono',monospace;
+}
+
+/* ─── BODY / PAGE ─────────────────────────────────────── */
+body{
+  font-family:var(--font-sans);
+  background:var(--pearl);
+  color:var(--ink);
+  min-height:100vh;
+  position:relative;
+  overflow-x:hidden;
+}
+
+/* ─── GRID PATTERN BACKGROUND ────────────────────────── */
+body::before{
+  content:'';
+  position:fixed;
+  inset:0;
+  background-image:
+    linear-gradient(rgba(0,102,255,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,102,255,0.04) 1px, transparent 1px);
+  background-size:32px 32px;
+  pointer-events:none;
+  z-index:0;
+}
+body::after{
+  content:'';
+  position:fixed;
+  inset:0;
+  background:
+    radial-gradient(ellipse 60% 40% at 20% 20%, rgba(0,200,224,0.06) 0%, transparent 70%),
+    radial-gradient(ellipse 50% 50% at 80% 80%, rgba(0,102,255,0.07) 0%, transparent 70%),
+    radial-gradient(ellipse 40% 60% at 50% 50%, rgba(0,200,224,0.03) 0%, transparent 80%);
+  pointer-events:none;
+  z-index:0;
+}
+
+/* ─── MAIN WRAPPER ────────────────────────────────────── */
+.page{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:28px 20px 60px}
+
+/* ─── HEADER ──────────────────────────────────────────── */
+.header{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  text-align:center;
+  padding:36px 24px 28px;
+  margin-bottom:32px;
+  background:var(--glass-bg);
+  backdrop-filter:blur(20px) saturate(160%);
+  -webkit-backdrop-filter:blur(20px) saturate(160%);
+  border:1px solid var(--glass-border);
+  border-radius:var(--radius-xl);
+  box-shadow:var(--glass-shadow);
+  position:relative;
+  overflow:hidden;
+}
+.header::before{
+  content:'';
+  position:absolute;
+  top:0;left:0;right:0;height:3px;
+  background:linear-gradient(90deg,transparent,var(--blue),var(--cyan),var(--blue),transparent);
+}
+
+.header-badge{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:5px 16px;border-radius:50px;
+  background:var(--blue-xl);border:1px solid rgba(0,102,255,0.2);
+  font-family:var(--font-mono);font-size:10px;font-weight:700;
+  color:var(--blue);letter-spacing:2px;text-transform:uppercase;
+  margin-bottom:16px;
+}
+.badge-dot{width:6px;height:6px;border-radius:50%;background:var(--cyan);box-shadow:0 0 6px var(--cyan)}
+
+.header-title{
+  font-size:clamp(26px,4vw,42px);font-weight:900;
+  line-height:1.1;letter-spacing:-1px;
+  background:linear-gradient(135deg,var(--ink) 0%,var(--blue) 50%,var(--cyan) 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  margin-bottom:8px;
+}
+.header-subtitle{font-size:13px;color:var(--gray-400);font-weight:400;letter-spacing:0.5px;margin-bottom:20px}
+
+.header-credits{
+  display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:center;
+  padding:14px 24px;border-radius:var(--radius);
+  background:rgba(0,102,255,0.04);border:1px solid rgba(0,102,255,0.1);
+}
+.credit-item{font-size:11px;color:var(--gray-600)}
+.credit-item strong{color:var(--ink);font-weight:700}
+.credit-sep{color:var(--gray-200);font-size:16px;display:flex;align-items:center}
+
+/* ─── NAV TABS ────────────────────────────────────────── */
+.nav-tabs{
+  display:flex;gap:6px;
+  background:var(--glass-bg);
+  backdrop-filter:blur(16px);
+  border:1px solid var(--glass-border);
+  border-radius:var(--radius-lg);
+  padding:5px;
+  margin-bottom:28px;
+  box-shadow:var(--glass-shadow);
+}
+.nav-tab{
+  flex:1;padding:10px 16px;border-radius:var(--radius);
+  border:none;background:transparent;cursor:pointer;
+  font-family:var(--font-sans);font-size:12px;font-weight:600;
+  color:var(--gray-600);transition:all .25s ease;
+  display:flex;align-items:center;justify-content:center;gap:7px;
+}
+.nav-tab:hover{background:rgba(0,102,255,0.06);color:var(--blue)}
+.nav-tab.active{
+  background:linear-gradient(135deg,var(--blue),var(--electric));
+  color:#fff;
+  box-shadow:0 4px 16px rgba(0,102,255,0.35);
+}
+.nav-tab-icon{width:16px;height:16px}
+
+/* ─── PANEL SECTION ───────────────────────────────────── */
+.panel-section{display:none}
+.panel-section.active{display:block}
+
+/* ─── TRIPTYCH GRID ───────────────────────────────────── */
+.triptych{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:0;
+  border-radius:var(--radius-xl);
+  overflow:hidden;
+  box-shadow:0 24px 80px rgba(0,66,204,0.12),0 2px 8px rgba(0,0,0,0.08);
+  position:relative;
+}
+
+/* Flow-line connector SVG overlay */
+.flow-overlay{
+  position:absolute;inset:0;pointer-events:none;z-index:10;
+}
+
+/* ─── PANEL BASE ──────────────────────────────────────── */
+.panel{
+  background:var(--glass-bg);
+  backdrop-filter:blur(24px) saturate(180%);
+  -webkit-backdrop-filter:blur(24px) saturate(180%);
+  border:1px solid var(--glass-border);
+  padding:28px 22px 24px;
+  display:flex;flex-direction:column;
+  position:relative;overflow:hidden;
+  min-height:900px;
+}
+.panel:not(:last-child){border-right:1px solid rgba(0,102,255,0.1)}
+
+/* Subtle panel tint differences */
+.panel-1{background:rgba(255,255,255,0.75)}
+.panel-2{background:rgba(248,250,255,0.78)}
+.panel-3{background:rgba(245,250,255,0.75)}
+
+/* Panel top line */
+.panel::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,transparent,var(--blue),var(--cyan),transparent);
+  opacity:0;transition:opacity .3s;
+}
+.panel:hover::before{opacity:1}
+
+/* Inner glow corner decoration */
+.panel-glow{
+  position:absolute;width:200px;height:200px;border-radius:50%;
+  pointer-events:none;opacity:0.5;
+}
+.glow-tl{top:-60px;left:-60px;background:radial-gradient(circle,rgba(0,200,224,0.12),transparent 70%)}
+.glow-br{bottom:-60px;right:-60px;background:radial-gradient(circle,rgba(0,102,255,0.1),transparent 70%)}
+
+/* ─── DATA NODE / SECTION HEADER ─────────────────────── */
+.section-meta{
+  display:flex;align-items:center;justify-content:space-between;
+  margin-bottom:16px;
+}
+.panel-code{
+  font-family:var(--font-mono);font-size:9px;font-weight:700;
+  letter-spacing:2px;text-transform:uppercase;
+  padding:3px 10px;border-radius:4px;
+  background:rgba(0,102,255,0.06);
+  border:1px solid rgba(0,102,255,0.15);
+  color:var(--blue);
+}
+.panel-label{font-size:10px;font-weight:700;color:var(--cyan);letter-spacing:1px;text-transform:uppercase}
+
+/* ─── PANEL TITLE ────────────────────────────────────── */
+.panel-title{
+  font-size:22px;font-weight:800;color:var(--ink);
+  letter-spacing:-0.5px;line-height:1.2;margin-bottom:6px;
+}
+.panel-desc{font-size:12px;color:var(--gray-400);line-height:1.6;margin-bottom:18px}
+
+/* ─── GLASS CARD ──────────────────────────────────────── */
+.glass-card{
+  background:rgba(255,255,255,0.6);
+  border:1px solid rgba(255,255,255,0.85);
+  border-radius:var(--radius);
+  padding:14px 16px;margin-bottom:10px;
+  box-shadow:0 2px 12px rgba(0,66,204,0.06);
+  transition:box-shadow .25s, transform .25s;
+  position:relative;overflow:hidden;
+}
+.glass-card:hover{
+  box-shadow:0 6px 24px rgba(0,102,255,0.12);
+  transform:translateY(-2px);
+}
+.glass-card::before{
+  content:'';position:absolute;left:0;top:0;bottom:0;width:3px;
+  background:linear-gradient(180deg,var(--blue),var(--cyan));
+  border-radius:3px 0 0 3px;
+}
+
+.card-title{
+  font-size:11px;font-weight:700;letter-spacing:1px;
+  text-transform:uppercase;color:var(--blue);margin-bottom:6px;
+}
+.card-text{font-size:12px;color:var(--gray-600);line-height:1.6}
+.card-text strong{color:var(--ink);font-weight:600}
+
+/* ─── PILL TAGS ───────────────────────────────────────── */
+.pills{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:14px}
+.pill{
+  font-size:9.5px;font-weight:600;padding:3px 10px;
+  border-radius:50px;letter-spacing:0.5px;
+}
+.pill-blue{background:var(--blue-xl);color:var(--blue);border:1px solid rgba(0,102,255,0.2)}
+.pill-cyan{background:var(--cyan-xl);color:#007d8a;border:1px solid rgba(0,200,224,0.3)}
+.pill-ghost{background:rgba(255,255,255,0.7);color:var(--gray-600);border:1px solid var(--gray-200)}
+
+/* ─── STATS ROW ───────────────────────────────────────── */
+.stats-row{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px}
+.stat-box{
+  background:rgba(255,255,255,0.65);
+  border:1px solid rgba(0,102,255,0.12);
+  border-radius:var(--radius-sm);
+  padding:10px 12px;text-align:center;
+}
+.stat-num{
+  font-family:var(--font-mono);font-size:22px;font-weight:700;
+  background:linear-gradient(135deg,var(--blue),var(--cyan));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  line-height:1;
+}
+.stat-label{font-size:9px;color:var(--gray-400);letter-spacing:0.5px;margin-top:3px}
+
+/* ─── CHARACTER CARDS ────────────────────────────────── */
+.char-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px}
+.char-card{
+  background:rgba(255,255,255,0.65);
+  border:1px solid rgba(0,102,255,0.1);
+  border-radius:var(--radius);
+  padding:12px;
+  text-align:center;
+  display:flex;flex-direction:column;align-items:center;gap:6px;
+}
+.char-avatar{
+  width:52px;height:52px;border-radius:50%;
+  background:linear-gradient(135deg,var(--blue-xl),var(--cyan-xl));
+  border:2px solid rgba(0,102,255,0.2);
+  display:flex;align-items:center;justify-content:center;
+  font-size:22px;
+  box-shadow:0 0 0 4px rgba(0,102,255,0.07);
+}
+.char-name{font-size:13px;font-weight:700;color:var(--ink)}
+.char-role-label{font-size:9.5px;color:var(--blue);font-weight:600;letter-spacing:0.3px}
+
+/* ─── BRAIN TRIO ──────────────────────────────────────── */
+.brain-trio{display:flex;justify-content:center;gap:8px;margin-bottom:14px;align-items:flex-end}
+.brain-node{
+  border-radius:50%;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  padding:10px 6px;text-align:center;line-height:1.2;
+  border:1.5px solid;
+  position:relative;
+}
+.brain-node::after{
+  content:'';position:absolute;inset:-4px;border-radius:50%;
+  background:inherit;opacity:0.15;filter:blur(6px);z-index:-1;
+}
+.bn-rep{width:68px;height:68px;background:rgba(0,102,255,0.06);border-color:rgba(0,102,255,0.3)}
+.bn-lim{width:80px;height:80px;background:rgba(0,200,224,0.06);border-color:rgba(0,200,224,0.4)}
+.bn-neo{width:68px;height:68px;background:rgba(0,66,204,0.06);border-color:rgba(0,66,204,0.3)}
+.bn-emoji{font-size:18px;display:block;margin-bottom:2px}
+.bn-label{font-size:8px;font-weight:700;color:var(--blue);text-transform:uppercase;letter-spacing:0.5px}
+.bn-sub{font-size:7.5px;color:var(--gray-400)}
+.bn-lim .bn-label{color:#007d8a}
+
+/* ─── FORMULA BOX ─────────────────────────────────────── */
+.formula-box{
+  background:linear-gradient(135deg,rgba(0,102,255,0.05),rgba(0,200,224,0.05));
+  border:1px solid rgba(0,102,255,0.15);
+  border-radius:var(--radius);
+  padding:14px;text-align:center;margin-bottom:14px;
+  position:relative;overflow:hidden;
+}
+.formula-box::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,transparent 40%,rgba(0,200,224,0.08));
+}
+.formula-label{font-family:var(--font-mono);font-size:9px;color:var(--blue);letter-spacing:2px;text-transform:uppercase;margin-bottom:4px}
+.formula-eq{
+  font-family:var(--font-mono);font-size:20px;font-weight:700;
+  background:linear-gradient(90deg,var(--blue),var(--cyan));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  letter-spacing:3px;margin-bottom:4px;
+}
+.formula-desc{font-size:10px;color:var(--gray-600);line-height:1.4}
+
+/* ─── FLOW STEPS ──────────────────────────────────────── */
+.flow-steps{margin-bottom:14px}
+.flow-step{display:flex;align-items:flex-start;gap:10px;margin-bottom:8px}
+.flow-dot{
+  width:22px;height:22px;border-radius:50%;flex-shrink:0;
+  background:linear-gradient(135deg,var(--blue),var(--cyan));
+  display:flex;align-items:center;justify-content:center;
+  font-size:9px;font-weight:700;color:#fff;margin-top:1px;
+  box-shadow:0 2px 8px rgba(0,102,255,0.3);
+}
+.flow-text{font-size:12px;color:var(--gray-600);line-height:1.55}
+.flow-text strong{color:var(--ink);font-weight:600}
+
+/* ─── DIALOGUE BUBBLE ─────────────────────────────────── */
+.dialogue{
+  background:rgba(255,255,255,0.7);
+  border:1px solid rgba(0,102,255,0.1);
+  border-radius:var(--radius);
+  padding:12px 14px;margin-bottom:10px;
+  position:relative;
+}
+.dialogue::before{
+  content:'"';font-size:40px;position:absolute;
+  top:-10px;left:6px;
+  color:rgba(0,102,255,0.1);
+  line-height:1;
+  font-family:Georgia,serif;
+}
+.dialogue-who{
+  font-size:9px;font-weight:700;letter-spacing:1.5px;
+  text-transform:uppercase;color:var(--blue);margin-bottom:5px;
+}
+.dialogue-text{font-size:11.5px;color:var(--gray-600);line-height:1.6;font-style:italic}
+.dialogue-text strong{color:var(--ink);font-style:normal;font-weight:600}
+
+/* ─── COVER SPECIAL ───────────────────────────────────── */
+.cover-hero{
+  background:linear-gradient(135deg,rgba(0,66,204,0.05),rgba(0,200,224,0.05));
+  border:1px solid rgba(0,102,255,0.12);
+  border-radius:var(--radius-lg);
+  padding:20px 18px;margin-bottom:14px;
+  text-align:center;position:relative;overflow:hidden;
+}
+.cover-hero::after{
+  content:'';position:absolute;
+  bottom:-30px;right:-30px;
+  width:120px;height:120px;border-radius:50%;
+  background:radial-gradient(circle,rgba(0,200,224,0.15),transparent 70%);
+}
+.cover-course{
+  font-family:var(--font-mono);font-size:10px;
+  color:var(--blue);letter-spacing:2px;text-transform:uppercase;
+  margin-bottom:8px;font-weight:700;
+}
+.cover-main{
+  font-size:36px;font-weight:900;letter-spacing:-1px;line-height:1;
+  background:linear-gradient(135deg,var(--ink),var(--blue));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  margin-bottom:6px;
+}
+.cover-roman{
+  font-size:54px;font-weight:900;letter-spacing:-2px;
+  background:linear-gradient(135deg,var(--blue),var(--cyan));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  display:block;line-height:1;margin-bottom:8px;
+}
+.cover-line{
+  height:2px;width:60px;margin:10px auto;
+  background:linear-gradient(90deg,var(--blue),var(--cyan));
+  border-radius:2px;
+}
+.cover-topic{
+  font-size:13px;font-weight:700;color:var(--ink);
+  padding:8px 14px;border-radius:var(--radius-sm);
+  background:rgba(0,102,255,0.06);border:1px solid rgba(0,102,255,0.15);
+  display:inline-block;margin-top:4px;
+}
+
+/* Credits panel */
+.credits-panel{
+  background:rgba(255,255,255,0.7);
+  border:1px solid rgba(0,102,255,0.12);
+  border-radius:var(--radius);
+  padding:14px 16px;
+}
+.credits-row{margin-bottom:10px}
+.credits-row:last-child{margin-bottom:0}
+.credits-key{font-size:9px;text-transform:uppercase;letter-spacing:1.5px;color:var(--gray-400);font-weight:700;margin-bottom:2px}
+.credits-val{font-size:13px;font-weight:700;color:var(--ink)}
+.credits-val.blue{color:var(--blue)}
+.credits-val.agency{font-family:var(--font-mono);font-size:11px;font-weight:700;color:var(--cyan)}
+
+/* ─── CONCLUSION BOX ──────────────────────────────────── */
+.conclusion-box{
+  background:linear-gradient(135deg,rgba(0,102,255,0.05),rgba(0,200,224,0.05));
+  border:1px solid rgba(0,102,255,0.15);
+  border-radius:var(--radius-lg);
+  padding:16px;margin-bottom:14px;
+}
+.conclusion-title{
+  font-size:12px;font-weight:700;color:var(--blue);
+  letter-spacing:0.5px;margin-bottom:10px;
+  display:flex;align-items:center;gap:7px;
+}
+.conclusion-title::before{
+  content:'';display:inline-block;width:14px;height:2px;
+  background:linear-gradient(90deg,var(--blue),var(--cyan));
+  border-radius:2px;
+}
+.conclusion-item{display:flex;align-items:flex-start;gap:8px;margin-bottom:7px}
+.ci-icon{
+  width:16px;height:16px;border-radius:50%;flex-shrink:0;
+  background:linear-gradient(135deg,var(--blue),var(--cyan));
+  display:flex;align-items:center;justify-content:center;
+  margin-top:1px;
+}
+.ci-icon svg{width:9px;height:9px;stroke:#fff;fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
+.ci-text{font-size:11.5px;color:var(--gray-600);line-height:1.5}
+.ci-text strong{color:var(--ink);font-weight:600}
+
+/* ─── COMPARISON TABLE ────────────────────────────────── */
+.compare-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px}
+.compare-col{
+  background:rgba(255,255,255,0.6);
+  border-radius:var(--radius);
+  padding:12px;
+  border:1px solid rgba(0,102,255,0.1);
+}
+.compare-col.digital{border-color:rgba(0,200,224,0.25);background:rgba(0,200,224,0.04)}
+.compare-col-title{
+  font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;
+  margin-bottom:8px;display:flex;align-items:center;gap:5px;
+}
+.compare-col-title.trad{color:var(--gray-600)}
+.compare-col-title.digi{color:#007d8a}
+.compare-item{
+  font-size:10.5px;color:var(--gray-600);line-height:1.5;
+  padding:4px 0;border-bottom:1px solid rgba(0,0,0,0.04);
+  display:flex;align-items:flex-start;gap:5px;
+}
+.compare-item:last-child{border-bottom:none}
+.compare-item::before{
+  content:'›';font-weight:700;flex-shrink:0;
+  color:rgba(0,102,255,0.4);margin-top:0.5px;
+}
+.compare-item.digi::before{color:rgba(0,200,224,0.6)}
+
+/* ─── STRATEGIC STEPS ─────────────────────────────────── */
+.steps-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:14px}
+.step-box{
+  background:rgba(255,255,255,0.65);
+  border:1px solid rgba(0,102,255,0.1);
+  border-radius:var(--radius-sm);
+  padding:9px 11px;
+}
+.step-num{
+  font-family:var(--font-mono);font-size:10px;font-weight:700;
+  color:var(--blue);margin-bottom:3px;
+}
+.step-name{font-size:10.5px;font-weight:600;color:var(--ink);margin-bottom:2px}
+.step-desc{font-size:9.5px;color:var(--gray-400);line-height:1.45}
+
+/* ─── SURVIVAL BUTTONS ────────────────────────────────── */
+.survival-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:5px;margin-bottom:14px}
+.survival-btn{
+  background:rgba(255,255,255,0.65);
+  border:1px solid rgba(0,102,255,0.1);
+  border-radius:var(--radius-sm);
+  padding:8px 10px;
+  display:flex;align-items:center;gap:7px;
+  cursor:default;
+  transition:box-shadow .2s, border-color .2s;
+}
+.survival-btn:hover{
+  border-color:rgba(0,102,255,0.25);
+  box-shadow:0 2px 10px rgba(0,102,255,0.1);
+}
+.sb-icon{
+  width:26px;height:26px;border-radius:50%;flex-shrink:0;
+  background:linear-gradient(135deg,var(--blue-xl),var(--cyan-xl));
+  border:1px solid rgba(0,102,255,0.15);
+  display:flex;align-items:center;justify-content:center;font-size:13px;
+}
+.sb-label{font-size:10px;font-weight:600;color:var(--ink);line-height:1.3}
+
+/* ─── SECTION DIVIDER ─────────────────────────────────── */
+.section-divider{
+  height:1px;margin:12px 0;
+  background:linear-gradient(90deg,transparent,rgba(0,102,255,0.15),transparent);
+}
+
+/* ─── PANEL FOOTER ────────────────────────────────────── */
+.panel-footer{
+  margin-top:auto;padding-top:14px;
+  border-top:1px solid rgba(0,102,255,0.08);
+  display:flex;align-items:center;justify-content:space-between;
+}
+.footer-label{font-size:9px;font-family:var(--font-mono);color:var(--gray-400);letter-spacing:1px;text-transform:uppercase}
+.footer-dot{
+  width:28px;height:28px;border-radius:50%;
+  background:linear-gradient(135deg,var(--blue),var(--cyan));
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--font-mono);font-size:9px;font-weight:700;color:#fff;
+  box-shadow:0 2px 8px rgba(0,102,255,0.3);
+}
+
+/* ─── STATUS BAR ──────────────────────────────────────── */
+.status-bar{
+  margin-top:32px;
+  background:var(--glass-bg);
+  backdrop-filter:blur(20px);
+  border:1px solid var(--glass-border);
+  border-radius:var(--radius-lg);
+  padding:14px 22px;
+  display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;
+  gap:12px;
+  box-shadow:var(--glass-shadow);
+}
+.status-left{display:flex;align-items:center;gap:8px}
+.status-dot{width:8px;height:8px;border-radius:50%;background:var(--cyan);box-shadow:0 0 8px var(--cyan);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.5}}
+.status-text{font-size:11px;color:var(--gray-600)}
+.status-right{display:flex;align-items:center;gap:20px;font-size:10.5px}
+.status-item{color:var(--gray-400)}
+.status-item strong{color:var(--ink);font-weight:700}
+.status-item.hl{color:var(--blue);font-weight:700}
+
+/* ─── INTERACTIVE LAB SECTION ─────────────────────────── */
+.lab-hero{
+  text-align:center;padding:32px 24px;
+  background:var(--glass-bg);
+  backdrop-filter:blur(20px) saturate(160%);
+  border:1px solid var(--glass-border);
+  border-radius:var(--radius-xl);
+  box-shadow:var(--glass-shadow);
+  margin-bottom:24px;
+  position:relative;overflow:hidden;
+}
+.lab-hero::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:3px;
+  background:linear-gradient(90deg,transparent,var(--blue),var(--cyan),transparent);
+}
+.lab-badge{
+  display:inline-flex;align-items:center;gap:6px;
+  font-family:var(--font-mono);font-size:9px;font-weight:700;
+  color:var(--blue);letter-spacing:2px;text-transform:uppercase;
+  padding:5px 14px;border-radius:50px;
+  background:var(--blue-xl);border:1px solid rgba(0,102,255,0.2);
+  margin-bottom:14px;
+}
+.lab-title{
+  font-size:clamp(22px,3vw,36px);font-weight:900;letter-spacing:-0.5px;
+  background:linear-gradient(135deg,var(--ink),var(--blue),var(--cyan));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  margin-bottom:8px;
+}
+.lab-desc{font-size:13px;color:var(--gray-400);line-height:1.6;max-width:600px;margin:0 auto}
+
+/* Brain Selector */
+.brain-selector-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:8px;margin-bottom:24px;
+}
+.brain-btn{
+  background:var(--glass-bg);
+  backdrop-filter:blur(12px);
+  border:1.5px solid rgba(0,102,255,0.12);
+  border-radius:var(--radius-lg);
+  padding:18px 12px;cursor:pointer;
+  text-align:center;
+  transition:all .25s ease;
+  font-family:var(--font-sans);
+}
+.brain-btn:hover{
+  background:var(--glass-hover);
+  border-color:rgba(0,102,255,0.3);
+  box-shadow:0 8px 24px rgba(0,102,255,0.12);
+  transform:translateY(-3px);
+}
+.brain-btn.selected{
+  background:linear-gradient(135deg,rgba(0,102,255,0.08),rgba(0,200,224,0.08));
+  border-color:rgba(0,102,255,0.35);
+  box-shadow:0 8px 24px rgba(0,102,255,0.18),inset 0 0 0 1px rgba(0,200,224,0.15);
+  transform:translateY(-3px);
+}
+.brain-btn-emoji{font-size:28px;display:block;margin-bottom:8px}
+.brain-btn-name{font-size:12px;font-weight:700;color:var(--ink);margin-bottom:3px}
+.brain-btn-weight{
+  font-family:var(--font-mono);font-size:10px;font-weight:700;
+  padding:2px 8px;border-radius:50px;
+  background:var(--blue-xl);color:var(--blue);
+  display:inline-block;
+}
+
+/* Brain Detail Panel */
+.brain-detail{
+  background:var(--glass-bg);
+  backdrop-filter:blur(20px) saturate(160%);
+  border:1px solid var(--glass-border);
+  border-radius:var(--radius-xl);
+  padding:28px;
+  box-shadow:var(--glass-shadow);
+  margin-bottom:24px;
+  position:relative;overflow:hidden;
+}
+.brain-detail-header{
+  display:flex;align-items:flex-start;justify-content:space-between;
+  gap:16px;margin-bottom:20px;padding-bottom:16px;
+  border-bottom:1px solid rgba(0,102,255,0.08);
+}
+.brain-detail-title{font-size:24px;font-weight:800;color:var(--ink);letter-spacing:-0.3px}
+.brain-detail-alt{font-size:11px;color:var(--blue);font-weight:600;letter-spacing:1px;text-transform:uppercase;margin-bottom:4px}
+.brain-weight-badge{
+  padding:6px 14px;border-radius:50px;
+  background:linear-gradient(135deg,var(--blue),var(--cyan));
+  color:#fff;font-family:var(--font-mono);font-size:10px;font-weight:700;
+  white-space:nowrap;
+  box-shadow:0 4px 14px rgba(0,102,255,0.35);
+}
+.brain-detail-body{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.brain-detail-col h4{
+  font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;
+  color:var(--blue);margin-bottom:8px;
+}
+.brain-detail-text{font-size:12.5px;color:var(--gray-600);line-height:1.65}
+.brain-detail-text strong{color:var(--ink);font-weight:600}
+.brain-tip-box{
+  background:linear-gradient(135deg,rgba(0,102,255,0.04),rgba(0,200,224,0.04));
+  border:1px solid rgba(0,102,255,0.12);
+  border-radius:var(--radius);padding:12px;
+}
+.brain-example{
+  background:rgba(255,255,255,0.7);
+  border:1px solid var(--glass-border);
+  border-radius:var(--radius);padding:12px;
+  margin-top:10px;
+}
+.brain-example-label{
+  font-size:9px;font-family:var(--font-mono);font-weight:700;
+  color:var(--cyan);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:4px;
+}
+.brain-example-title{font-size:12px;font-weight:700;color:var(--ink);margin-bottom:2px}
+.brain-example-slogan{font-size:11.5px;color:var(--blue);font-style:italic;margin-bottom:4px}
+.brain-example-trigger{font-size:10.5px;color:var(--gray-400)}
+
+/* Survival buttons lab */
+.survival-lab-grid{
+  display:grid;grid-template-columns:repeat(4,1fr);
+  gap:8px;margin-bottom:20px;
+}
+.slab-btn{
+  background:var(--glass-bg);
+  backdrop-filter:blur(12px);
+  border:1.5px solid rgba(0,102,255,0.1);
+  border-radius:var(--radius);
+  padding:12px 8px;cursor:pointer;
+  text-align:center;
+  transition:all .22s ease;
+  font-family:var(--font-sans);
+}
+.slab-btn:hover{
+  border-color:rgba(0,102,255,0.3);
+  box-shadow:0 6px 20px rgba(0,102,255,0.1);
+  transform:translateY(-2px);
+}
+.slab-btn.active{
+  background:linear-gradient(135deg,rgba(0,102,255,0.08),rgba(0,200,224,0.08));
+  border-color:rgba(0,200,224,0.4);
+  box-shadow:0 4px 16px rgba(0,200,224,0.2);
+}
+.slab-icon{font-size:20px;display:block;margin-bottom:5px}
+.slab-label{font-size:9.5px;font-weight:600;color:var(--ink);line-height:1.3}
+.slab-cat{font-size:8px;color:var(--gray-400);margin-top:2px}
+
+.slab-detail{
+  background:var(--glass-bg);
+  backdrop-filter:blur(20px);
+  border:1px solid var(--glass-border);
+  border-radius:var(--radius-lg);
+  padding:20px 24px;
+  box-shadow:var(--glass-shadow);
+  display:grid;grid-template-columns:1fr 1fr;gap:20px;
+}
+.slab-detail-title{
+  font-size:18px;font-weight:800;color:var(--ink);margin-bottom:4px;
+  letter-spacing:-0.3px;
+}
+.slab-detail-desc{font-size:12.5px;color:var(--gray-600);line-height:1.65;margin-bottom:10px}
+.slab-detail-example{
+  font-size:11px;color:var(--blue);font-style:italic;
+  padding:8px 12px;border-radius:var(--radius-sm);
+  background:var(--blue-xl);border:1px solid rgba(0,102,255,0.15);
+}
+
+/* Story section */
+.story-nav{
+  display:flex;align-items:center;justify-content:space-between;
+  background:var(--glass-bg);
+  backdrop-filter:blur(16px);
+  border:1px solid var(--glass-border);
+  border-radius:var(--radius-lg);
+  padding:12px 20px;
+  box-shadow:var(--glass-shadow);
+  margin-bottom:20px;
+}
+.story-title{font-size:13px;font-weight:700;color:var(--ink);display:flex;align-items:center;gap:8px}
+.story-title-icon{
+  width:28px;height:28px;border-radius:50%;
+  background:linear-gradient(135deg,var(--blue),var(--cyan));
+  display:flex;align-items:center;justify-content:center;
+  font-size:12px;color:#fff;
+  box-shadow:0 2px 8px rgba(0,102,255,0.3);
+}
+.story-progress-bar{
+  flex:1;height:4px;margin:0 16px;
+  background:rgba(0,102,255,0.1);
+  border-radius:2px;overflow:hidden;
+}
+.story-progress-fill{
+  height:100%;
+  background:linear-gradient(90deg,var(--blue),var(--cyan));
+  border-radius:2px;
+  transition:width .4s ease;
+}
+.story-counter{font-family:var(--font-mono);font-size:11px;color:var(--blue);font-weight:700}
+
+.story-card{
+  background:var(--glass-bg);
+  backdrop-filter:blur(24px) saturate(180%);
+  border:1px solid var(--glass-border);
+  border-radius:var(--radius-xl);
+  padding:32px;
+  box-shadow:var(--glass-shadow);
+  min-height:320px;
+  display:flex;align-items:flex-start;gap:24px;
+}
+.story-avatar{
+  width:64px;height:64px;border-radius:50%;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+  font-size:26px;
+  border:2px solid rgba(0,102,255,0.2);
+  box-shadow:0 0 0 4px rgba(0,102,255,0.06);
+  background:linear-gradient(135deg,var(--blue-xl),var(--cyan-xl));
+}
+.story-body{flex:1}
+.story-speaker{
+  font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:2px;
+  color:var(--blue);margin-bottom:6px;display:flex;align-items:center;gap:8px;
+}
+.speaker-role{
+  font-size:9px;font-weight:500;color:var(--gray-400);letter-spacing:0;text-transform:none;
+  padding:2px 8px;border-radius:50px;background:rgba(0,102,255,0.06);
+}
+.story-text{
+  font-size:15px;color:var(--ink);line-height:1.75;font-weight:400;
+  min-height:120px;
+}
+.story-text strong{color:var(--blue);font-weight:700}
+.story-concept-tag{
+  display:inline-flex;align-items:center;gap:5px;
+  margin-top:16px;padding:5px 14px;border-radius:50px;
+  background:linear-gradient(135deg,var(--blue-xl),var(--cyan-xl));
+  border:1px solid rgba(0,102,255,0.2);
+  font-size:10px;font-weight:700;color:var(--blue);letter-spacing:0.5px;
+}
+
+.story-controls{
+  display:flex;align-items:center;gap:10px;
+  margin-top:20px;
+  background:var(--glass-bg);
+  backdrop-filter:blur(16px);
+  border:1px solid var(--glass-border);
+  border-radius:var(--radius-lg);
+  padding:12px 16px;
+  box-shadow:var(--glass-shadow);
+}
+.story-btn{
+  padding:9px 22px;border-radius:var(--radius-sm);
+  border:none;cursor:pointer;font-family:var(--font-sans);font-size:12px;font-weight:700;
+  transition:all .2s ease;
+}
+.story-btn-prev{
+  background:rgba(0,102,255,0.06);color:var(--blue);
+  border:1px solid rgba(0,102,255,0.15);
+}
+.story-btn-prev:hover{background:rgba(0,102,255,0.12)}
+.story-btn-prev:disabled{opacity:0.35;cursor:not-allowed}
+.story-btn-next{
+  background:linear-gradient(135deg,var(--blue),var(--electric));
+  color:#fff;
+  box-shadow:0 4px 14px rgba(0,102,255,0.35);
+}
+.story-btn-next:hover{box-shadow:0 6px 20px rgba(0,102,255,0.45);transform:translateY(-1px)}
+.story-btn-next:active{transform:translateY(0)}
+.story-auto-btn{
+  margin-left:auto;padding:9px 16px;border-radius:var(--radius-sm);
+  border:1.5px solid rgba(0,200,224,0.3);
+  background:rgba(0,200,224,0.05);color:#007d8a;
+  cursor:pointer;font-family:var(--font-sans);font-size:11px;font-weight:600;
+  transition:all .2s;display:flex;align-items:center;gap:5px;
+}
+.story-auto-btn:hover{background:rgba(0,200,224,0.1)}
+.story-auto-btn.playing{background:var(--cyan-xl);border-color:rgba(0,200,224,0.5)}
+
+/* ─── CURSOR / TYPING ─────────────────────────────────── */
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+.cursor{display:inline-block;width:2px;height:16px;background:var(--blue);vertical-align:text-bottom;animation:blink 1s step-end infinite;margin-left:1px}
+
+/* ─── RESPONSIVE ──────────────────────────────────────── */
+@media(max-width:900px){
+  .triptych{grid-template-columns:1fr}
+  .panel{min-height:auto;border-right:none!important}
+  .panel:not(:last-child){border-bottom:1px solid rgba(0,102,255,0.1)}
+  .brain-detail-body{grid-template-columns:1fr}
+  .survival-lab-grid{grid-template-columns:repeat(2,1fr)}
+  .slab-detail{grid-template-columns:1fr}
+  .brain-selector-grid{grid-template-columns:1fr}
+  .story-card{flex-direction:column}
+}
+@media(max-width:600px){
+  .compare-grid{grid-template-columns:1fr}
+  .steps-grid{grid-template-columns:1fr}
+  .char-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <!-- ══════════════════════════════════════════════════
+       HEADER
+  ══════════════════════════════════════════════════ -->
+  <header class="header">
+    <div class="header-badge">
+      <span class="badge-dot"></span>
+      Mercadeo II · Tríptico Digital Interactivo · Junio 2026
+    </div>
+    <h1 class="header-title">La Teoría de los 3 Cerebros</h1>
+    <p class="header-subtitle">Masterclass de Neuromarketing y Estrategia Digital · Agencia NEXUS Creative</p>
+    <div class="header-credits">
+      <div class="credit-item"><strong>Creativo:</strong> Luis Diego Solís Ureña</div>
+      <div class="credit-sep">|</div>
+      <div class="credit-item"><strong>Profesor:</strong> Msc. Jorge Alejandro Solano Quesada</div>
+      <div class="credit-sep">|</div>
+      <div class="credit-item"><strong>Curso:</strong> Mercadeo II</div>
+    </div>
+  </header>
+
+  <!-- ══════════════════════════════════════════════════
+       NAV TABS
+  ══════════════════════════════════════════════════ -->
+  <nav class="nav-tabs">
+    <button class="nav-tab active" onclick="showSection('triptico',this)">
+      <svg class="nav-tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="18" rx="2"/><line x1="9" y1="3" x2="9" y2="21"/><line x1="15" y1="3" x2="15" y2="21"/></svg>
+      Tríptico Digital
+    </button>
+    <button class="nav-tab" onclick="showSection('story',this)">
+      <svg class="nav-tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+      Modo Historia
+    </button>
+    <button class="nav-tab" onclick="showSection('lab',this)">
+      <svg class="nav-tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3H5a2 2 0 0 0-2 2v4m6-6h10a2 2 0 0 1 2 2v4M9 3v18m0 0h10a2 2 0 0 0 2-2V9M9 21H5a2 2 0 0 1-2-2V9m0 0h18"/></svg>
+      Laboratorio Interactivo
+    </button>
+  </nav>
+
+  <!-- ══════════════════════════════════════════════════
+       SECTION 1: TRÍPTICO
+  ══════════════════════════════════════════════════ -->
+  <section id="section-triptico" class="panel-section active">
+
+    <!-- FLIP TOGGLE -->
+    <div style="display:flex;justify-content:center;margin-bottom:20px;gap:8px">
+      <button id="btn-exterior" onclick="flipTriptico('exterior')"
+        style="padding:9px 22px;border-radius:var(--radius-sm);font-size:12px;font-weight:700;border:1.5px solid rgba(0,102,255,0.3);background:linear-gradient(135deg,var(--blue),var(--electric));color:#fff;cursor:pointer;box-shadow:0 4px 14px rgba(0,102,255,0.3);font-family:var(--font-sans)">
+        ◑ Cara Exterior · Portada &amp; Conclusión
+      </button>
+      <button id="btn-interior" onclick="flipTriptico('interior')"
+        style="padding:9px 22px;border-radius:var(--radius-sm);font-size:12px;font-weight:700;border:1.5px solid rgba(0,102,255,0.15);background:rgba(255,255,255,0.7);color:var(--blue);cursor:pointer;font-family:var(--font-sans);backdrop-filter:blur(12px)">
+        ◐ Cara Interior · Desarrollo &amp; Teoría
+      </button>
+    </div>
+
+    <!-- EXTERIOR FACE -->
+    <div id="face-exterior">
+      <div class="triptych">
+        <!-- Flow SVG -->
+        <svg class="flow-overlay" xmlns="http://www.w3.org/2000/svg" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:10">
+          <defs>
+            <linearGradient id="flowGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stop-color="rgba(0,102,255,0)"/>
+              <stop offset="40%" stop-color="rgba(0,102,255,0.18)"/>
+              <stop offset="60%" stop-color="rgba(0,200,224,0.18)"/>
+              <stop offset="100%" stop-color="rgba(0,200,224,0)"/>
+            </linearGradient>
+          </defs>
+          <path d="M33.3% 220 Q50% 260 66.6% 220" fill="none" stroke="url(#flowGrad)" stroke-width="1.5" stroke-dasharray="6,4" opacity="0.8"/>
+        </svg>
+
+        <!-- PANEL E1: TRADICIONAL vs DIGITAL -->
+        <div class="panel panel-1">
+          <div class="panel-glow glow-tl"></div>
+          <div class="section-meta">
+            <span class="panel-code">PANEL · 05</span>
+            <span class="panel-label">Marketing Evolution</span>
+          </div>
+          <h2 class="panel-title">Tradicional vs. Digital</h2>
+          <p class="panel-desc">Sofía y Mateo contrastan las herramientas del pasado con la revolución interactiva actual.</p>
+
+          <div class="compare-grid">
+            <div class="compare-col">
+              <div class="compare-col-title trad">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+                Tradicional
+              </div>
+              <div class="compare-item">Publicidad masiva: TV, radio, prensa.</div>
+              <div class="compare-item">Comunicación unidireccional.</div>
+              <div class="compare-item">Segmentación limitada.</div>
+              <div class="compare-item">Medición difícil o aproximada.</div>
+              <div class="compare-item">Costos de producción elevados.</div>
+            </div>
+            <div class="compare-col digital">
+              <div class="compare-col-title digi">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#007d8a" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                Digital
+              </div>
+              <div class="compare-item digi">Canales en internet y redes sociales.</div>
+              <div class="compare-item digi">Interacción bidireccional en tiempo real.</div>
+              <div class="compare-item digi">Segmentación hiper-precisa.</div>
+              <div class="compare-item digi">Medición inmediata: ROI, tráfico, clics.</div>
+              <div class="compare-item digi">Escalabilidad y optimización continua.</div>
+            </div>
+          </div>
+
+          <div class="section-divider"></div>
+
+          <div class="card-title" style="margin-bottom:8px">Botones de Supervivencia</div>
+          <div class="survival-grid">
+            <div class="survival-btn"><span class="sb-icon">🏆</span><span class="sb-label">Ser Reconocido</span></div>
+            <div class="survival-btn"><span class="sb-icon">🛡️</span><span class="sb-label">Sensación de Seguridad</span></div>
+            <div class="survival-btn"><span class="sb-icon">🧭</span><span class="sb-label">Sensación de Libertad</span></div>
+            <div class="survival-btn"><span class="sb-icon">✨</span><span class="sb-label">Búsqueda de Placer</span></div>
+            <div class="survival-btn"><span class="sb-icon">☕</span><span class="sb-label">Búsqueda de Confort</span></div>
+            <div class="survival-btn"><span class="sb-icon">👥</span><span class="sb-label">Pertenecer al Grupo</span></div>
+          </div>
+
+          <div class="panel-footer">
+            <span class="footer-label">Marketing · Evolución</span>
+            <span class="footer-dot">05</span>
+          </div>
+        </div>
+
+        <!-- PANEL E2: CONCLUSIÓN -->
+        <div class="panel panel-2">
+          <div class="panel-glow glow-tl"></div>
+          <div class="panel-glow glow-br"></div>
+          <div class="section-meta">
+            <span class="panel-code">PANEL · 06 · CONCLUSIÓN</span>
+            <span class="panel-label">Cierre estratégico</span>
+          </div>
+          <h2 class="panel-title">El Arte de Conectar</h2>
+          <p class="panel-desc">El marketing del futuro no manipula: comprende el corazón humano y entrega valor genuino.</p>
+
+          <div class="dialogue">
+            <div class="dialogue-who">Sofía — Directora Creativa</div>
+            <div class="dialogue-text">«Al entender que el <strong>85% de la compra</strong> radica en el cerebro reptiliano y las emociones límbicas, nuestro deber creativo es entregar valor genuino, ética y aliviar las verdaderas necesidades de las personas.»</div>
+          </div>
+
+          <div class="section-divider"></div>
+
+          <div class="card-title" style="margin-bottom:8px">Las 6 Etapas del Plan Estratégico</div>
+          <div class="steps-grid">
+            <div class="step-box"><div class="step-num">01</div><div class="step-name">Diagnóstico Situacional</div><div class="step-desc">FODA · PESTEL · 5 Fuerzas de Porter</div></div>
+            <div class="step-box"><div class="step-num">02</div><div class="step-name">Misión, Visión y Valores</div><div class="step-desc">Propósito y pilares éticos de la org.</div></div>
+            <div class="step-box"><div class="step-num">03</div><div class="step-name">Objetivos Estratégicos</div><div class="step-desc">Metodología SMART a largo plazo</div></div>
+            <div class="step-box"><div class="step-num">04</div><div class="step-name">Diseño de Estrategias</div><div class="step-desc">Crecimiento · Diferenciación · Cartera</div></div>
+            <div class="step-box"><div class="step-num">05</div><div class="step-name">Asignación de Recursos</div><div class="step-desc">Presupuesto · Talento · Plan de acción</div></div>
+            <div class="step-box"><div class="step-num">06</div><div class="step-name">Evaluación y Control</div><div class="step-desc">KPIs · Monitoreo · Ajuste estratégico</div></div>
+          </div>
+
+          <div class="formula-box" style="margin-top:auto">
+            <div class="formula-label">La Fórmula Maestra</div>
+            <div class="formula-eq">DC = RC + MC</div>
+            <div class="formula-desc">Decisión de Compra = Respuesta Consciente + Motivador Inconsciente</div>
+          </div>
+
+          <div class="panel-footer">
+            <span class="footer-label">Conclusión · Cierre</span>
+            <span class="footer-dot">06</span>
+          </div>
+        </div>
+
+        <!-- PANEL E3: PORTADA -->
+        <div class="panel panel-3">
+          <div class="panel-glow glow-br"></div>
+          <div class="section-meta">
+            <span class="panel-code">PORTADA</span>
+            <span class="panel-label">Junio 2026</span>
+          </div>
+
+          <div class="cover-hero">
+            <div class="cover-course">Masterclass · Mercadeo</div>
+            <div class="cover-main">Mercadeo</div>
+            <div class="cover-roman">II</div>
+            <div class="cover-line"></div>
+            <div class="cover-topic">La Teoría de los 3 Cerebros</div>
+            <p style="font-size:11px;color:var(--gray-400);margin-top:10px">Neuromarketing y Estrategia Digital</p>
+          </div>
+
+          <div class="brain-trio">
+            <div class="brain-node bn-rep">
+              <span class="bn-emoji">🦎</span>
+              <span class="bn-label">Reptil</span>
+              <span class="bn-sub">Instinto</span>
+            </div>
+            <div class="brain-node bn-lim">
+              <span class="bn-emoji">💙</span>
+              <span class="bn-label" style="color:#007d8a">Límbico</span>
+              <span class="bn-sub">Emoción</span>
+            </div>
+            <div class="brain-node bn-neo">
+              <span class="bn-emoji">🧠</span>
+              <span class="bn-label">Neocórtex</span>
+              <span class="bn-sub">Razón</span>
+            </div>
+          </div>
+
+          <div class="credits-panel">
+            <div class="credits-row">
+              <div class="credits-key">Nombre del Creativo</div>
+              <div class="credits-val">Luis Diego Solís Ureña</div>
+            </div>
+            <div class="credits-row">
+              <div class="credits-key">Profesor</div>
+              <div class="credits-val blue">Msc. Jorge Alejandro Solano Quesada</div>
+            </div>
+            <div class="credits-row">
+              <div class="credits-key">Agencia</div>
+              <div class="credits-val agency">NEXUS CREATIVE AGENCY</div>
+            </div>
+            <div class="credits-row" style="margin-top:8px;padding-top:8px;border-top:1px solid rgba(0,102,255,0.08)">
+              <div class="credits-key">Curso</div>
+              <div class="credits-val">Mercadeo II · Universidad</div>
+            </div>
+          </div>
+
+          <div class="pills" style="margin-top:12px">
+            <span class="pill pill-blue">Neuromarketing</span>
+            <span class="pill pill-cyan">3 Cerebros</span>
+            <span class="pill pill-blue">DC = RC + MC</span>
+            <span class="pill pill-ghost">Estrategia Digital</span>
+          </div>
+
+          <div class="panel-footer">
+            <span class="footer-label">Portada · NEXUS</span>
+            <span class="footer-dot">01</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- INTERIOR FACE -->
+    <div id="face-interior" style="display:none">
+      <div class="triptych">
+        <!-- PANEL I1: LA HISTORIA -->
+        <div class="panel panel-1">
+          <div class="panel-glow glow-tl"></div>
+          <div class="section-meta">
+            <span class="panel-code">PANEL · 02</span>
+            <span class="panel-label">Agencia NEXUS</span>
+          </div>
+          <h2 class="panel-title">La Historia Comienza</h2>
+          <p class="panel-desc">Mateo llega con sus apuntes de Mercadeo II. Sofía lo guía en los fundamentos del marketing moderno.</p>
+
+          <div class="char-grid">
+            <div class="char-card">
+              <div class="char-avatar">👩‍💼</div>
+              <div class="char-name">Sofía</div>
+              <div class="char-role-label">Directora Creativa</div>
+            </div>
+            <div class="char-card">
+              <div class="char-avatar">👨‍🎓</div>
+              <div class="char-name">Mateo</div>
+              <div class="char-role-label">Junior Mercadólogo</div>
+            </div>
+          </div>
+
+          <div class="glass-card">
+            <div class="card-title">¿Qué es verdaderamente Mercadeo?</div>
+            <div class="card-text">Es el proceso de <strong>anticipar y satisfacer necesidades humanas</strong>, comunicando valor genuino a través de productos, servicios y experiencias que conecten profundamente.</div>
+          </div>
+
+          <div class="glass-card">
+            <div class="card-title">Los 5 Pilares de Importancia</div>
+            <div class="card-text">
+              <strong>1.</strong> Creación de Valor &nbsp;·&nbsp; <strong>2.</strong> Generación de Empleo &nbsp;·&nbsp; <strong>3.</strong> Competitividad Empresarial &nbsp;·&nbsp; <strong>4.</strong> Fomento a la Innovación &nbsp;·&nbsp; <strong>5.</strong> Desarrollo Sostenible
+            </div>
+          </div>
+
+          <div class="dialogue">
+            <div class="dialogue-who">Mateo — Junior</div>
+            <div class="dialogue-text">«¡Hola Sofía! Salí de la Masterclass del profesor Solano con muchísimas notas. Quiero organizarlo todo en un diseño <strong>inolvidable</strong> para nuestros clientes.»</div>
+          </div>
+
+          <div class="stats-row">
+            <div class="stat-box"><div class="stat-num">5+</div><div class="stat-label">áreas de impacto</div></div>
+            <div class="stat-box"><div class="stat-num">360°</div><div class="stat-label">visión integral</div></div>
+          </div>
+
+          <div class="panel-footer">
+            <span class="footer-label">Historia · Inicio</span>
+            <span class="footer-dot">02</span>
+          </div>
+        </div>
+
+        <!-- PANEL I2: LOS 3 CEREBROS -->
+        <div class="panel panel-2">
+          <div class="panel-glow glow-tl"></div>
+          <div class="panel-glow glow-br"></div>
+          <div class="section-meta">
+            <span class="panel-code">PANEL · 03 · NÚCLEO</span>
+            <span class="panel-label">85% Reptiliano</span>
+          </div>
+          <h2 class="panel-title">Los 3 Cerebros de MacLean</h2>
+          <p class="panel-desc">¿Cómo tomamos decisiones de compra realmente? Para principiantes, sin tecnicismos.</p>
+
+          <div class="brain-trio" style="margin-bottom:16px">
+            <div class="brain-node bn-rep">
+              <span class="bn-emoji">🦎</span>
+              <span class="bn-label">Reptiliano</span>
+              <span class="bn-sub">85% Peso</span>
+            </div>
+            <div class="brain-node bn-lim" style="width:82px;height:82px">
+              <span class="bn-emoji">💙</span>
+              <span class="bn-label" style="color:#007d8a">Límbico</span>
+              <span class="bn-sub">Emoción</span>
+            </div>
+            <div class="brain-node bn-neo">
+              <span class="bn-emoji">🧠</span>
+              <span class="bn-label">Neocórtex</span>
+              <span class="bn-sub">15% Peso</span>
+            </div>
+          </div>
+
+          <div class="glass-card">
+            <div class="card-title" style="color:var(--blue)">🦎 Cerebro Reptiliano · 85% de Peso</div>
+            <div class="card-text"><strong>Instinto puro, supervivencia</strong>, evitar dolor, búsqueda de placer y compra inmediata. El más antiguo (~500 M años). Reacciona a contrastes visuales y urgencia.</div>
+          </div>
+
+          <div class="glass-card">
+            <div class="card-title" style="color:#007d8a">💙 Cerebro Límbico · Motor Emocional</div>
+            <div class="card-text"><strong>Emociones, afecto, recuerdos y estatus social (Lovemark).</strong> Aquí el consumidor se enamora de la historia de la marca. Hippocampo + Amígdala.</div>
+          </div>
+
+          <div class="glass-card">
+            <div class="card-title" style="color:var(--electric)">🧠 Cerebro Neocórtex · 15% (Justificador)</div>
+            <div class="card-text"><strong>Lógica, palabras y datos numéricos</strong> para justificar el precio. La capa evolutiva más reciente. Analítico, pero no decide la compra primaria.</div>
+          </div>
+
+          <div class="flow-steps" style="margin-top:8px">
+            <div class="flow-step">
+              <div class="flow-dot">1</div>
+              <div class="flow-text"><strong>Rex activa la atención:</strong> colores, contraste, movimiento visual.</div>
+            </div>
+            <div class="flow-step">
+              <div class="flow-dot">2</div>
+              <div class="flow-text"><strong>Lyra conecta emocionalmente:</strong> historia, empatía, sensaciones.</div>
+            </div>
+            <div class="flow-step">
+              <div class="flow-dot">3</div>
+              <div class="flow-text"><strong>Neo justifica la decisión:</strong> precio, datos, características técnicas.</div>
+            </div>
+          </div>
+
+          <div class="panel-footer">
+            <span class="footer-label">Núcleo · 3 Cerebros</span>
+            <span class="footer-dot">03</span>
+          </div>
+        </div>
+
+        <!-- PANEL I3: NEUROMARKETING -->
+        <div class="panel panel-3">
+          <div class="panel-glow glow-br"></div>
+          <div class="section-meta">
+            <span class="panel-code">PANEL · 04</span>
+            <span class="panel-label">Neurociencia Aplicada</span>
+          </div>
+          <h2 class="panel-title">Neuromarketing</h2>
+          <p class="panel-desc">La fusión perfecta entre neurociencia, psicología y marketing para entender el subconsciente.</p>
+
+          <div class="formula-box">
+            <div class="formula-label">La Fórmula del Subconsciente</div>
+            <div class="formula-eq">DC = RC + MC</div>
+            <div class="formula-desc">Decisión de Compra = Respuesta Consciente + Motivador Inconsciente</div>
+          </div>
+
+          <div class="glass-card">
+            <div class="card-title">Herramientas de Medición</div>
+            <div class="card-text">
+              <strong>EEG</strong> · Mide actividad cerebral eléctrica<br>
+              <strong>fMRI</strong> · Escaneo de imágenes cerebrales<br>
+              <strong>Eye Tracking</strong> · Seguimiento de la mirada<br>
+              <strong>GSR</strong> · Conductancia de la piel (sudoración)
+            </div>
+          </div>
+
+          <div class="glass-card">
+            <div class="card-title">El Poder de las Neuronas Espejo</div>
+            <div class="card-text">
+              <strong>😊 Sonreír y contagiar energía:</strong> transmite entusiasmo.<br>
+              <strong>🏷️ Nombre de pila:</strong> genera vínculo inmediato de confianza.<br>
+              <strong>🔍 Comprender intención real:</strong> percibir cómo se siente el cliente.
+            </div>
+          </div>
+
+          <div class="dialogue">
+            <div class="dialogue-who">Sofía — Directora Creativa</div>
+            <div class="dialogue-text">«El neuromarketing no es manipulación: es <strong>comprender profundamente</strong> al ser humano para ofrecerle soluciones que realmente lo ayuden a mejorar su vida.»</div>
+          </div>
+
+          <div class="conclusion-box">
+            <div class="conclusion-title">Síntesis: Lo que aprendimos</div>
+            <div class="conclusion-item">
+              <div class="ci-icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+              <div class="ci-text"><strong>El mercadeo</strong> crea valor, empleo e innovación sostenible.</div>
+            </div>
+            <div class="conclusion-item">
+              <div class="ci-icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+              <div class="ci-text"><strong>85%</strong> de las decisiones son inconscientes (reptiliano + límbico).</div>
+            </div>
+            <div class="conclusion-item">
+              <div class="ci-icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+              <div class="ci-text"><strong>Hablar a los 3 cerebros</strong> en orden correcto = venta garantizada.</div>
+            </div>
+            <div class="conclusion-item">
+              <div class="ci-icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+              <div class="ci-text"><strong>DC = RC + MC</strong> es la fórmula maestra del neuromarketing.</div>
+            </div>
+          </div>
+
+          <div class="panel-footer">
+            <span class="footer-label">Neurociencia · Aplicada</span>
+            <span class="footer-dot">04</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ══════════════════════════════════════════════════
+       SECTION 2: STORY MODE
+  ══════════════════════════════════════════════════ -->
+  <section id="section-story" class="panel-section">
+    <div class="story-nav">
+      <div class="story-title">
+        <div class="story-title-icon">💬</div>
+        Modo Historia · Agencia NEXUS Creative
+      </div>
+      <div class="story-progress-bar">
+        <div class="story-progress-fill" id="storyProgressBar" style="width:10%"></div>
+      </div>
+      <div class="story-counter" id="storyCounter">1 / 10</div>
+    </div>
+
+    <div class="story-card" id="storyCard">
+      <div class="story-avatar" id="storyAvatar">👨‍🎓</div>
+      <div class="story-body">
+        <div class="story-speaker" id="storySpeaker">
+          Mateo <span class="speaker-role">Junior Mercadólogo</span>
+        </div>
+        <div class="story-text" id="storyText"></div>
+        <div class="story-concept-tag" id="storyConcept">
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          Mercadeo II
+        </div>
+      </div>
+    </div>
+
+    <div class="story-controls">
+      <button class="story-btn story-btn-prev" id="btnPrev" onclick="storyPrev()" disabled>← Anterior</button>
+      <button class="story-btn story-btn-next" id="btnNext" onclick="storyNext()">Siguiente →</button>
+      <button class="story-auto-btn" id="btnAuto" onclick="storyToggleAuto()">
+        <span id="autoIcon">▶</span> Reproducir
+      </button>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════
+       SECTION 3: LAB
+  ══════════════════════════════════════════════════ -->
+  <section id="section-lab" class="panel-section">
+    <div class="lab-hero">
+      <div class="lab-badge">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3H5a2 2 0 0 0-2 2v4m6-6h10a2 2 0 0 1 2 2v4M9 3v18m0 0h10a2 2 0 0 0 2-2V9M9 21H5a2 2 0 0 1-2-2V9m0 0h18"/></svg>
+        Laboratorio Interactivo · NEXUS Creative
+      </div>
+      <div class="lab-title">Teoría de los 3 Cerebros &amp; Neuroventas</div>
+      <p class="lab-desc">Experimenta en vivo los conceptos de la Masterclass de <strong>Mercadeo II</strong>. Diseñado para entender el subconsciente sin tecnicismos.</p>
+    </div>
+
+    <!-- Brain Selector -->
+    <div style="margin-bottom:16px">
+      <div class="panel-code" style="margin-bottom:12px;display:inline-block">Selecciona un cerebro para explorar</div>
+    </div>
+    <div class="brain-selector-grid">
+      <button class="brain-btn selected" onclick="selectBrain('reptiliano',this)">
+        <span class="brain-btn-emoji">🦎</span>
+        <div class="brain-btn-name">Cerebro Reptiliano</div>
+        <div class="brain-btn-weight">85% de Peso</div>
+      </button>
+      <button class="brain-btn" onclick="selectBrain('limbico',this)">
+        <span class="brain-btn-emoji">💙</span>
+        <div class="brain-btn-name">Cerebro Límbico</div>
+        <div class="brain-btn-weight">Motor Emocional</div>
+      </button>
+      <button class="brain-btn" onclick="selectBrain('neocortex',this)">
+        <span class="brain-btn-emoji">🧠</span>
+        <div class="brain-btn-name">Cerebro Neocórtex</div>
+        <div class="brain-btn-weight">15% Justificador</div>
+      </button>
+    </div>
+
+    <div class="brain-detail" id="brainDetail">
+      <!-- populated by JS -->
+    </div>
+
+    <!-- Survival Buttons Lab -->
+    <div style="margin-bottom:16px">
+      <div class="panel-code" style="margin-bottom:12px;display:inline-block">Botones de Supervivencia · Toca para explorar</div>
+    </div>
+    <div class="survival-lab-grid">
+      <button class="slab-btn active" onclick="selectSurvival(0,this)"><span class="slab-icon">🏆</span><div class="slab-label">Ser Reconocido</div><div class="slab-cat">emoción</div></button>
+      <button class="slab-btn" onclick="selectSurvival(1,this)"><span class="slab-icon">🛡️</span><div class="slab-label">Seguridad</div><div class="slab-cat">instinto</div></button>
+      <button class="slab-btn" onclick="selectSurvival(2,this)"><span class="slab-icon">🧭</span><div class="slab-label">Libertad</div><div class="slab-cat">instinto</div></button>
+      <button class="slab-btn" onclick="selectSurvival(3,this)"><span class="slab-icon">✨</span><div class="slab-label">Placer</div><div class="slab-cat">instinto</div></button>
+      <button class="slab-btn" onclick="selectSurvival(4,this)"><span class="slab-icon">☕</span><div class="slab-label">Confort</div><div class="slab-cat">instinto</div></button>
+      <button class="slab-btn" onclick="selectSurvival(5,this)"><span class="slab-icon">👥</span><div class="slab-label">Pertenecer</div><div class="slab-cat">emoción</div></button>
+      <button class="slab-btn" onclick="selectSurvival(6,this)"><span class="slab-icon">🎯</span><div class="slab-label">Retos y Logros</div><div class="slab-cat">razón</div></button>
+      <button class="slab-btn" onclick="selectSurvival(7,this)"><span class="slab-icon">🎛️</span><div class="slab-label">Control</div><div class="slab-cat">razón</div></button>
+    </div>
+
+    <div class="slab-detail" id="slabDetail">
+      <!-- populated by JS -->
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════
+       STATUS BAR
+  ══════════════════════════════════════════════════ -->
+  <div class="status-bar">
+    <div class="status-left">
+      <span class="status-dot"></span>
+      <span class="status-text">Tríptico Digital Interactivo · Entregable Académico · High-Tech Command Center Style</span>
+    </div>
+    <div class="status-right">
+      <span class="status-item">Mercadeo II</span>
+      <span class="status-item">Prof. Jorge Alejandro Solano Q.</span>
+      <span class="status-item hl">Creativo: Luis Diego Solís Ureña</span>
+    </div>
+  </div>
+
+</div><!-- /page -->
+
+<script>
+/* ─── DATA ─────────────────────────────────────────────── */
+const BRAINS = {
+  reptiliano:{
+    emoji:'🦎',
+    name:'Cerebro Reptiliano',
+    alt:'El Instintivo / Supervivencia',
+    weight:'85% Peso en Decisión',
+    desc:'Es el cerebro más antiguo (~500 millones de años). Actúa de forma automática y rápida. No procesa palabras complejas; reacciona a imágenes visuales directas, contraste y urgencia. Es el primero en decidir si algo merece atención.',
+    tip:'Muestra resultados inmediatos, garantías "sin riesgo", escasez ("últimas 2 unidades") y enfócate en aliviar un dolor o brindar confort absoluto.',
+    exTitle:'Zapatillas Ultra-Boost',
+    exSlogan:'«Corre sin dolor. Protege tus rodillas hoy.»',
+    exTrigger:'Activa: Botón de Seguridad y Evadir Dolor.',
+  },
+  limbico:{
+    emoji:'💙',
+    name:'Cerebro Límbico',
+    alt:'El Emocional / Los Vínculos',
+    weight:'Motor de Deseo y Amor por la Marca',
+    desc:'Procesa sentimientos, alegría, nostalgia y empatía. Aquí residen el hipocampo y la amígdala. Es donde el consumidor se enamora de una historia (Storytelling) y construye vínculos afectivos con las marcas (Lovemarks).',
+    tip:'Cuenta historias auténticas con personajes reales. Genera dopamina mediante experiencias sensoriales, calidez y estatus social compartido.',
+    exTitle:'Café Origen Familiar',
+    exSlogan:'«El aroma de los domingos en casa de los abuelos.»',
+    exTrigger:'Activa: Botón de Pertenencia y Vínculo Afectivo.',
+  },
+  neocortex:{
+    emoji:'🧠',
+    name:'Cerebro Neocórtex',
+    alt:'El Racional / Lógico',
+    weight:'15% Peso (Justificador)',
+    desc:'Es la capa evolutiva más reciente. Analítico y reflexivo. Aunque no toma la decisión primaria de compra, el cliente lo necesita para no sentirse culpable del gasto. Procesa lenguaje, números y comparaciones.',
+    tip:'Ofrece fichas técnicas claras, tablas comparativas, métricas de ahorro comprobado y justificaciones racionales de precio con datos reales.',
+    exTitle:'Software de Gestión',
+    exSlogan:'«Reduce un 42% tus costos operativos en 30 días.»',
+    exTrigger:'Activa: Análisis Cuantitativo y Retorno de Inversión.',
+  }
+};
+
+const SURVIVAL = [
+  {emoji:'🏆',label:'Ser Reconocido',cat:'Emoción',desc:'Búsqueda de estatus, orgullo y admiración de los demás.',example:'Relojes de lujo, membresías VIP.'},
+  {emoji:'🛡️',label:'Sensación de Seguridad',cat:'Instinto',desc:'Reducir la incertidumbre y proteger a la familia.',example:'Seguros de vida, autos con 5 estrellas de seguridad.'},
+  {emoji:'🧭',label:'Sensación de Libertad',cat:'Instinto',desc:'Autonomía, romper rutinas y hacer lo que uno desea.',example:'Motos todoterreno, paquetes de viaje de aventura.'},
+  {emoji:'✨',label:'Búsqueda de Placer',cat:'Instinto',desc:'Gratificación inmediata sensorial y deleite.',example:'Chocolates gourmet, spas, entretenimiento premium.'},
+  {emoji:'☕',label:'Búsqueda de Confort',cat:'Instinto',desc:'Comodidad absoluta, practicidad y ahorro de esfuerzo.',example:'Electrodomésticos inteligentes, colchones ergonómicos.'},
+  {emoji:'👥',label:'Pertenecer al Grupo',cat:'Emoción',desc:'Instinto tribal de afiliación y comunidad.',example:'Ropa deportiva de club, comunidades de marca de autos.'},
+  {emoji:'🎯',label:'Tener Retos y Lograrlos',cat:'Razón',desc:'Superación personal, dopamina de logro y competencia.',example:'Apps de fitness, cursos profesionales certificados.'},
+  {emoji:'🎛️',label:'Estar Bajo Control',cat:'Razón',desc:'Sensación de orden, previsibilidad y dominio.',example:'Sistemas de monitoreo del hogar, tableros financieros.'},
+];
+
+const DIALOGUES = [
+  {avatar:'👨‍🎓',speaker:'Mateo',role:'Junior Mercadólogo',concept:'Mercadeo II',
+   text:'¡Hola Sofía! Acabo de salir de la Masterclass del profesor Jorge Alejandro Solano sobre "Mercadeo II". Tomé muchísimas notas sobre las nuevas realidades y el comportamiento del consumidor, pero me gustaría organizarlo todo en un diseño inolvidable para nuestros clientes.'},
+  {avatar:'👩‍💼',speaker:'Sofía',role:'Directora Creativa Senior',concept:'¿Qué es Mercadeo?',
+   text:'¡Qué excelente iniciativa, Mateo! En nuestra agencia siempre decimos que el verdadero mercadeo no es perseguir a la gente, sino entender profundamente qué necesitan y cómo toman decisiones. ¿Por dónde empezamos?'},
+  {avatar:'👨‍🎓',speaker:'Mateo',role:'Junior Mercadólogo',concept:'Importancia del Mercadeo',
+   text:'El profesor explicó que el mercadeo crea valor, genera empleo, impulsa la innovación y fomenta el desarrollo sostenible. ¡Pero lo que me voló la cabeza fue descubrir que compramos de forma inconsciente!'},
+  {avatar:'👩‍💼',speaker:'Sofía',role:'Directora Creativa Senior',concept:'Teoría de los 3 Cerebros',
+   text:'Exacto. Ahí entra la famosa "Teoría de los 3 Cerebros" de Paul MacLean. Imagina que dentro de nuestra cabeza conviven tres copilotos: el Cerebro Reptiliano (instinto), el Límbico (emociones) y el Neocórtex (la razón).'},
+  {avatar:'👨‍🎓',speaker:'Mateo',role:'Junior Mercadólogo',concept:'85% Peso Reptiliano',
+   text:'¡Sí! Vi que el Cerebro Reptiliano tiene un 85% de peso en nuestras decisiones finales de compra. Busca supervivencia, placer inmediato, confort y evitar el dolor. ¿O sea que no compramos con lógica pura?'},
+  {avatar:'👩‍💼',speaker:'Sofía',role:'Directora Creativa Senior',concept:'DC = RC + MC',
+   text:'Así es, Mateo. El Neocórtex (racional) solo justifica la compra con números o características técnicas, pero el deseo nace en el Límbico (vínculos y afecto) y la decisión inmediata la gatilla el Reptiliano. Por eso en Neuromarketing usamos la fórmula: DC = RC + MC.'},
+  {avatar:'👨‍🎓',speaker:'Mateo',role:'Junior Mercadólogo',concept:'Neuronas Espejo',
+   text:'¡Decisión de Compra = Respuesta Consciente + Motivador Inconsciente! Y también vi lo de las "Neuronas Espejo": sonreír, llamar al cliente por su nombre de pila y transmitir energía positiva contagiando entusiasmo.'},
+  {avatar:'👩‍💼',speaker:'Sofía',role:'Directora Creativa Senior',concept:'Botones de Supervivencia',
+   text:'¡Vas dominando el arte, Mateo! Y para activar ese instinto reptiliano tocamos los "Botones de Supervivencia": reconocimiento social, seguridad, libertad, dominar retos o pertenecer a una tribu. Todo esto lo aplicamos tanto en Mercadeo Tradicional como en el Digital.'},
+  {avatar:'👨‍🎓',speaker:'Mateo',role:'Junior Mercadólogo',concept:'Tradicional vs Digital',
+   text:'Claro, el Mercadeo Tradicional usaba publicidad masiva en TV o radio de forma unidireccional. Pero hoy, con el Mercadeo Digital, segmentamos con precisión quirúrgica, interactuamos en redes sociales y medimos el retorno (ROI) en tiempo real.'},
+  {avatar:'👩‍💼',speaker:'Sofía',role:'Directora Creativa Senior',concept:'Plan Estratégico',
+   text:'¡Maravilloso resumen! Y para ejecutarlo con éxito seguimos las 6 etapas del Plan Estratégico: Diagnóstico (FODA), Misión/Visión, Objetivos SMART, Estrategias de Cartera, Asignación de recursos y Control. ¡Así transformamos conocimiento en conexión genuina!'},
+];
+
+/* ─── SECTION TOGGLE ──────────────────────────────────── */
+function showSection(id, btn){
+  document.querySelectorAll('.panel-section').forEach(s=>s.classList.remove('active'));
+  document.getElementById('section-'+id).classList.add('active');
+  document.querySelectorAll('.nav-tab').forEach(t=>t.classList.remove('active'));
+  if(btn)btn.classList.add('active');
+  if(id==='story' && storyIdx===0) renderStory(0);
+  if(id==='lab'){renderBrainDetail('reptiliano');renderSlabDetail(0);}
+}
+
+/* ─── TRIPTYCH FLIP ───────────────────────────────────── */
+function flipTriptico(face){
+  const extBtn=document.getElementById('btn-exterior');
+  const intBtn=document.getElementById('btn-interior');
+  const extFace=document.getElementById('face-exterior');
+  const intFace=document.getElementById('face-interior');
+  if(face==='exterior'){
+    extFace.style.display='block';intFace.style.display='none';
+    extBtn.style.background='linear-gradient(135deg,var(--blue),var(--electric))';
+    extBtn.style.color='#fff';extBtn.style.borderColor='rgba(0,102,255,0.3)';
+    extBtn.style.boxShadow='0 4px 14px rgba(0,102,255,0.3)';
+    intBtn.style.background='rgba(255,255,255,0.7)';
+    intBtn.style.color='var(--blue)';intBtn.style.boxShadow='none';
+  } else {
+    extFace.style.display='none';intFace.style.display='block';
+    intBtn.style.background='linear-gradient(135deg,var(--blue),var(--electric))';
+    intBtn.style.color='#fff';intBtn.style.borderColor='rgba(0,102,255,0.3)';
+    intBtn.style.boxShadow='0 4px 14px rgba(0,102,255,0.3)';
+    extBtn.style.background='rgba(255,255,255,0.7)';
+    extBtn.style.color='var(--blue)';extBtn.style.boxShadow='none';
+  }
+}
+
+/* ─── STORY MODE ──────────────────────────────────────── */
+let storyIdx=0, autoTimer=null, typingTimer=null, isTyping=false;
+const SPEED=16;
+
+function renderStory(idx){
+  const d=DIALOGUES[idx];
+  document.getElementById('storyAvatar').textContent=d.avatar;
+  document.getElementById('storySpeaker').innerHTML=d.speaker+' <span class="speaker-role">'+d.role+'</span>';
+  document.getElementById('storyConcept').innerHTML='<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg> '+d.concept;
+  document.getElementById('storyCounter').textContent=(idx+1)+' / '+DIALOGUES.length;
+  document.getElementById('storyProgressBar').style.width=(((idx+1)/DIALOGUES.length)*100)+'%';
+  document.getElementById('btnPrev').disabled=idx===0;
+  const el=document.getElementById('storyText');
+  el.innerHTML='';
+  if(typingTimer)clearInterval(typingTimer);
+  let i=0; isTyping=true;
+  typingTimer=setInterval(()=>{
+    if(i<d.text.length){
+      el.textContent=d.text.slice(0,++i);
+    } else {
+      clearInterval(typingTimer);isTyping=false;
+    }
+  },SPEED);
+}
+
+function storyNext(){
+  if(isTyping){
+    clearInterval(typingTimer);isTyping=false;
+    document.getElementById('storyText').textContent=DIALOGUES[storyIdx].text;return;
+  }
+  if(storyIdx<DIALOGUES.length-1){storyIdx++;renderStory(storyIdx);}
+}
+function storyPrev(){
+  if(storyIdx>0){storyIdx--;renderStory(storyIdx);}
+}
+function storyToggleAuto(){
+  const btn=document.getElementById('btnAuto');
+  const icon=document.getElementById('autoIcon');
+  if(autoTimer){
+    clearInterval(autoTimer);autoTimer=null;
+    btn.classList.remove('playing');icon.textContent='▶';
+    btn.querySelector('span').nextSibling.textContent=' Reproducir';
+  } else {
+    btn.classList.add('playing');icon.textContent='⏸';
+    btn.innerHTML='<span id="autoIcon">⏸</span> Pausar';
+    autoTimer=setInterval(()=>{
+      if(!isTyping){
+        if(storyIdx<DIALOGUES.length-1){storyIdx++;renderStory(storyIdx);}
+        else{clearInterval(autoTimer);autoTimer=null;const b=document.getElementById('btnAuto');b.classList.remove('playing');b.innerHTML='<span id="autoIcon">▶</span> Reproducir';}
+      }
+    },4500);
+  }
+}
+renderStory(0);
+
+/* ─── BRAIN LAB ───────────────────────────────────────── */
+function renderBrainDetail(id){
+  const b=BRAINS[id];
+  document.getElementById('brainDetail').innerHTML=`
+    <div class="brain-detail-header">
+      <div>
+        <div class="brain-detail-alt">${b.alt}</div>
+        <div class="brain-detail-title">${b.emoji} ${b.name}</div>
+      </div>
+      <span class="brain-weight-badge">⚖️ ${b.weight}</span>
+    </div>
+    <div class="brain-detail-body">
+      <div class="brain-detail-col">
+        <h4>¿Cómo funciona?</h4>
+        <p class="brain-detail-text">${b.desc}</p>
+        <div class="brain-example" style="margin-top:14px">
+          <div class="brain-example-label">📢 Ejemplo de Anuncio</div>
+          <div class="brain-example-title">${b.exTitle}</div>
+          <div class="brain-example-slogan">${b.exSlogan}</div>
+          <div class="brain-example-trigger">${b.exTrigger}</div>
+        </div>
+      </div>
+      <div class="brain-detail-col">
+        <h4>Tip de Marketing</h4>
+        <div class="brain-tip-box">
+          <p class="brain-detail-text">${b.tip}</p>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function selectBrain(id,el){
+  document.querySelectorAll('.brain-btn').forEach(b=>b.classList.remove('selected'));
+  el.classList.add('selected');
+  renderBrainDetail(id);
+}
+
+function renderSlabDetail(idx){
+  const s=SURVIVAL[idx];
+  document.getElementById('slabDetail').innerHTML=`
+    <div>
+      <div class="brain-example-label" style="margin-bottom:8px">Botón Activo · Categoría: ${s.cat}</div>
+      <div class="slab-detail-title">${s.emoji} ${s.label}</div>
+      <p class="slab-detail-desc">${s.desc}</p>
+    </div>
+    <div>
+      <div class="brain-example-label" style="margin-bottom:8px">Ejemplo en Marketing</div>
+      <div class="slab-detail-example">${s.example}</div>
+      <div class="formula-box" style="margin-top:12px">
+        <div class="formula-label">Cerebro que activa</div>
+        <div class="formula-eq" style="font-size:15px">${s.cat==='Instinto'?'Reptiliano':s.cat==='Emoción'?'Límbico':'Neocórtex'}</div>
+        <div class="formula-desc">${s.cat==='Instinto'?'Reacción inmediata y automática':s.cat==='Emoción'?'Vínculo afectivo y pertenencia':'Justificación lógica y control'}</div>
+      </div>
+    </div>
+  `;
+}
+
+function selectSurvival(idx,el){
+  document.querySelectorAll('.slab-btn').forEach(b=>b.classList.remove('active'));
+  el.classList.add('active');
+  renderSlabDetail(idx);
+}
+
+// Initial lab render
+renderBrainDetail('reptiliano');
+renderSlabDetail(0);
+</script>
+</body>
+</html>
