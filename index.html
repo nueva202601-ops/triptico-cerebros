@@ -10,6 +10,192 @@
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
 
+/* ─── MASTERCLASS LEGEND BANNER ───────────────────────── */
+.masterclass-legend{
+  width:100%;text-align:center;
+  padding:8px 20px;
+  background:linear-gradient(90deg,rgba(0,102,255,0.06),rgba(0,200,224,0.08),rgba(0,102,255,0.06));
+  border-bottom:1px solid rgba(0,102,255,0.1);
+  display:flex;align-items:center;justify-content:center;gap:10px;
+  position:relative;overflow:hidden;
+}
+.masterclass-legend::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(90deg,transparent 0%,rgba(0,200,224,0.06) 50%,transparent 100%);
+  animation:legendSweep 4s ease-in-out infinite;
+}
+@keyframes legendSweep{0%,100%{transform:translateX(-100%)}50%{transform:translateX(100%)}}
+.ml-icon{
+  width:28px;height:28px;border-radius:50%;
+  background:linear-gradient(135deg,var(--blue),var(--cyan));
+  display:flex;align-items:center;justify-content:center;
+  font-size:13px;flex-shrink:0;
+  box-shadow:0 0 12px rgba(0,200,224,0.4);
+  animation:iconPulse 3s ease-in-out infinite;
+}
+@keyframes iconPulse{0%,100%{box-shadow:0 0 8px rgba(0,200,224,0.3)}50%{box-shadow:0 0 20px rgba(0,200,224,0.7)}}
+.ml-text{font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;position:relative;z-index:1}
+.ml-text span{background:linear-gradient(90deg,var(--blue),var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.ml-sep{color:var(--gray-200);font-size:14px;position:relative;z-index:1}
+.ml-course{font-size:11px;color:var(--gray-400);letter-spacing:1px;position:relative;z-index:1}
+
+/* ─── ENHANCED BUTTON INTERACTIONS ────────────────────── */
+.nav-tab{
+  position:relative;overflow:hidden;
+}
+.nav-tab::after{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(circle at var(--mx,50%) var(--my,50%),rgba(0,200,224,0.25),transparent 60%);
+  opacity:0;transition:opacity .3s;pointer-events:none;
+}
+.nav-tab:hover::after{opacity:1}
+.nav-tab:active{transform:scale(0.97)}
+.nav-tab.active::before{
+  content:'';position:absolute;bottom:0;left:20%;right:20%;height:2px;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,0.6),transparent);
+  border-radius:2px;
+}
+
+/* Flip buttons enhanced */
+.flip-btn{
+  padding:10px 22px;border-radius:var(--radius-sm);
+  font-size:12px;font-weight:700;cursor:pointer;
+  font-family:var(--font-sans);
+  position:relative;overflow:hidden;
+  transition:all .3s cubic-bezier(.34,1.56,.64,1);
+  border:1.5px solid;
+}
+.flip-btn::before{
+  content:'';position:absolute;top:50%;left:50%;
+  width:0;height:0;border-radius:50%;
+  background:rgba(255,255,255,0.2);
+  transform:translate(-50%,-50%);
+  transition:width .5s ease,height .5s ease;
+}
+.flip-btn:hover::before{width:200px;height:200px}
+.flip-btn:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,102,255,0.35)}
+.flip-btn:active{transform:scale(0.97) translateY(0)}
+.flip-btn-active{
+  background:linear-gradient(135deg,var(--blue),var(--electric));
+  color:#fff;border-color:rgba(0,102,255,0.3);
+  box-shadow:0 4px 16px rgba(0,102,255,0.35);
+}
+.flip-btn-inactive{
+  background:rgba(255,255,255,0.7);
+  color:var(--blue);border-color:rgba(0,102,255,0.2);
+  backdrop-filter:blur(12px);
+}
+
+/* Story buttons enhanced */
+.story-btn{
+  position:relative;overflow:hidden;
+}
+.story-btn::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(255,255,255,0.1),transparent);
+  opacity:0;transition:opacity .25s;
+}
+.story-btn:hover::after{opacity:1}
+.story-btn-next{
+  transition:all .25s cubic-bezier(.34,1.56,.64,1);
+}
+.story-btn-next:hover{
+  transform:translateX(3px);
+  box-shadow:0 6px 22px rgba(0,102,255,0.5);
+}
+.story-btn-prev:hover{transform:translateX(-3px)}
+
+/* Brain buttons enhanced */
+.brain-btn{
+  transition:all .3s cubic-bezier(.34,1.56,.64,1);
+}
+.brain-btn:hover{transform:translateY(-5px) scale(1.02)}
+.brain-btn.selected{transform:translateY(-5px) scale(1.03)}
+
+/* Survival lab buttons */
+.slab-btn{transition:all .25s cubic-bezier(.34,1.56,.64,1)}
+.slab-btn:hover{transform:translateY(-4px) scale(1.04)}
+.slab-btn.active{transform:translateY(-3px) scale(1.03)}
+
+/* Glass cards hover */
+.glass-card{cursor:default}
+.glass-card:hover .card-title{color:var(--cyan)}
+
+/* ─── PAGE FLIP EFFECT ─────────────────────────────────── */
+.flip-container{
+  width:100%;
+  perspective:1200px;
+}
+.flip-book{
+  position:relative;
+  width:100%;
+}
+.flip-face{
+  width:100%;
+}
+.flip-face-back{
+  width:100%;
+}
+
+/* Page turn animation — NO rotateY on content, only on entry/exit */
+@keyframes pageExitLeft{
+  0%  {opacity:1; transform:perspective(1200px) rotateY(0deg) translateX(0); transform-origin:left center}
+  100%{opacity:0; transform:perspective(1200px) rotateY(-25deg) translateX(-3%); transform-origin:left center}
+}
+@keyframes pageEnterRight{
+  0%  {opacity:0; transform:perspective(1200px) rotateY(25deg) translateX(3%); transform-origin:right center}
+  100%{opacity:1; transform:perspective(1200px) rotateY(0deg) translateX(0); transform-origin:right center}
+}
+@keyframes pageExitRight{
+  0%  {opacity:1; transform:perspective(1200px) rotateY(0deg) translateX(0); transform-origin:right center}
+  100%{opacity:0; transform:perspective(1200px) rotateY(25deg) translateX(3%); transform-origin:right center}
+}
+@keyframes pageEnterLeft{
+  0%  {opacity:0; transform:perspective(1200px) rotateY(-25deg) translateX(-3%); transform-origin:left center}
+  100%{opacity:1; transform:perspective(1200px) rotateY(0deg) translateX(0); transform-origin:left center}
+}
+.anim-exit-left  {animation:pageExitLeft  .38s cubic-bezier(.4,0,.6,1) forwards}
+.anim-enter-right{animation:pageEnterRight .4s cubic-bezier(.2,0,.4,1) forwards}
+.anim-exit-right {animation:pageExitRight  .38s cubic-bezier(.4,0,.6,1) forwards}
+.anim-enter-left {animation:pageEnterLeft  .4s cubic-bezier(.2,0,.4,1) forwards}
+
+/* Page turn overlay shimmer */
+.page-shimmer{
+  position:fixed;inset:0;
+  background:linear-gradient(105deg,transparent 40%,rgba(0,150,255,0.08) 50%,rgba(0,200,224,0.12) 55%,transparent 65%);
+  pointer-events:none;z-index:100;
+  opacity:0;transition:opacity .1s;
+}
+.page-shimmer.active{
+  animation:shimmerPass .7s ease forwards;
+}
+@keyframes shimmerPass{
+  0%{opacity:0;background-position:-100% 0}
+  30%{opacity:1}
+  100%{opacity:0;background-position:200% 0}
+}
+
+/* ─── TOOLTIP ON BUTTONS ───────────────────────────────── */
+[data-tip]{position:relative}
+[data-tip]::after{
+  content:attr(data-tip);
+  position:absolute;bottom:calc(100% + 8px);left:50%;
+  transform:translateX(-50%) translateY(4px);
+  background:var(--ink);color:#fff;
+  font-size:10px;font-weight:600;white-space:nowrap;
+  padding:4px 10px;border-radius:6px;
+  opacity:0;pointer-events:none;
+  transition:all .2s ease;
+  z-index:50;
+}
+[data-tip]::before{
+  content:'';position:absolute;bottom:calc(100% + 2px);left:50%;
+  transform:translateX(-50%) translateY(4px);
+  border:4px solid transparent;border-top-color:var(--ink);
+  opacity:0;pointer-events:none;transition:all .2s ease;z-index:50;
+}
+[data-tip]:hover::after,[data-tip]:hover::before{opacity:1;transform:translateX(-50%) translateY(0)}
+
 /* ─── DESIGN TOKENS ───────────────────────────────────── */
 :root{
   --white:#ffffff;
@@ -860,7 +1046,249 @@ body::after{
 .story-auto-btn:hover{background:rgba(0,200,224,0.1)}
 .story-auto-btn.playing{background:var(--cyan-xl);border-color:rgba(0,200,224,0.5)}
 
-/* ─── CURSOR / TYPING ─────────────────────────────────── */
+/* ─── WELCOME MODAL ───────────────────────────────────── */
+.welcome-overlay{
+  position:fixed;inset:0;z-index:9999;
+  display:flex;align-items:center;justify-content:center;
+  background:rgba(10,16,40,0.75);
+  backdrop-filter:blur(12px);
+  -webkit-backdrop-filter:blur(12px);
+  animation:fadeInOverlay .5s ease forwards;
+}
+@keyframes fadeInOverlay{from{opacity:0}to{opacity:1}}
+.welcome-overlay.hiding{animation:fadeOutOverlay .4s ease forwards}
+@keyframes fadeOutOverlay{from{opacity:1}to{opacity:0;pointer-events:none}}
+
+.welcome-card{
+  background:rgba(255,255,255,0.95);
+  backdrop-filter:blur(24px);
+  border:1px solid rgba(255,255,255,0.95);
+  border-radius:28px;
+  padding:48px 44px 40px;
+  max-width:520px;width:90%;
+  text-align:center;
+  box-shadow:0 32px 80px rgba(0,66,204,0.18),0 2px 8px rgba(0,0,0,0.08);
+  position:relative;overflow:hidden;
+  animation:cardPop .6s cubic-bezier(.34,1.56,.64,1) forwards;
+}
+@keyframes cardPop{
+  0%{transform:scale(0.85) translateY(30px);opacity:0}
+  100%{transform:scale(1) translateY(0);opacity:1}
+}
+.welcome-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:4px;
+  background:linear-gradient(90deg,var(--blue),var(--cyan),var(--blue));
+  background-size:200%;
+  animation:shimmerLine 3s linear infinite;
+}
+@keyframes shimmerLine{0%{background-position:0%}100%{background-position:200%}}
+
+.welcome-agency{
+  font-family:var(--font-mono);font-size:10px;font-weight:700;
+  letter-spacing:3px;text-transform:uppercase;
+  color:var(--blue);margin-bottom:20px;
+  display:flex;align-items:center;justify-content:center;gap:8px;
+}
+.welcome-agency-dot{
+  width:8px;height:8px;border-radius:50%;
+  background:var(--cyan);
+  box-shadow:0 0 10px var(--cyan);
+  animation:iconPulse 2s infinite;
+}
+
+.welcome-avatar{
+  width:80px;height:80px;border-radius:50%;
+  background:linear-gradient(135deg,var(--blue-xl),var(--cyan-xl));
+  border:3px solid rgba(0,102,255,0.15);
+  display:flex;align-items:center;justify-content:center;
+  font-size:36px;margin:0 auto 20px;
+  box-shadow:0 0 0 6px rgba(0,102,255,0.06),0 8px 24px rgba(0,102,255,0.15);
+  animation:avatarFloat 4s ease-in-out infinite;
+}
+@keyframes avatarFloat{
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(-6px)}
+}
+
+.welcome-greeting{
+  font-size:13px;font-weight:600;
+  background:linear-gradient(135deg,var(--blue),var(--cyan));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  letter-spacing:0.5px;margin-bottom:6px;
+}
+.welcome-title{
+  font-size:26px;font-weight:900;color:var(--ink);
+  letter-spacing:-0.5px;line-height:1.2;margin-bottom:6px;
+}
+.welcome-title span{
+  background:linear-gradient(135deg,var(--blue),var(--cyan));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+}
+.welcome-subtitle{
+  font-size:13px;color:var(--gray-400);line-height:1.6;
+  margin-bottom:28px;
+}
+
+.welcome-actions{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:12px;
+}
+.btn-welcome-enter{
+  padding:14px 20px;border-radius:var(--radius);
+  background:linear-gradient(135deg,var(--blue),var(--electric));
+  color:#fff;border:none;cursor:pointer;
+  font-family:var(--font-sans);font-size:13px;font-weight:700;
+  box-shadow:0 6px 20px rgba(0,102,255,0.4);
+  transition:all .25s cubic-bezier(.34,1.56,.64,1);
+  display:flex;flex-direction:column;align-items:center;gap:4px;
+}
+.btn-welcome-enter:hover{
+  transform:translateY(-3px);
+  box-shadow:0 10px 28px rgba(0,102,255,0.5);
+}
+.btn-welcome-enter span{font-size:10px;font-weight:500;opacity:0.8}
+
+.btn-welcome-tour{
+  padding:14px 20px;border-radius:var(--radius);
+  background:rgba(255,255,255,0.8);
+  color:var(--blue);
+  border:1.5px solid rgba(0,102,255,0.2);
+  cursor:pointer;
+  font-family:var(--font-sans);font-size:13px;font-weight:700;
+  transition:all .25s cubic-bezier(.34,1.56,.64,1);
+  display:flex;flex-direction:column;align-items:center;gap:4px;
+  backdrop-filter:blur(8px);
+}
+.btn-welcome-tour:hover{
+  transform:translateY(-3px);
+  background:var(--blue-xl);
+  border-color:rgba(0,102,255,0.4);
+  box-shadow:0 8px 24px rgba(0,102,255,0.15);
+}
+.btn-welcome-tour span{font-size:10px;font-weight:500;opacity:0.7}
+
+.welcome-footer{
+  margin-top:20px;font-size:10px;color:var(--gray-400);
+  display:flex;align-items:center;justify-content:center;gap:6px;
+}
+
+/* ─── GUIDED TOUR SYSTEM ──────────────────────────────── */
+.tour-backdrop{
+  position:fixed;inset:0;z-index:8888;
+  pointer-events:none;
+}
+.tour-highlight{
+  position:fixed;z-index:8889;
+  border-radius:12px;
+  box-shadow:0 0 0 9999px rgba(10,16,40,0.6);
+  border:2px solid rgba(0,200,224,0.8);
+  pointer-events:none;
+  transition:all .45s cubic-bezier(.4,0,.2,1);
+  animation:highlightPulse 2s ease-in-out infinite;
+}
+@keyframes highlightPulse{
+  0%,100%{border-color:rgba(0,200,224,0.8);box-shadow:0 0 0 9999px rgba(10,16,40,0.6),0 0 20px rgba(0,200,224,0.4)}
+  50%{border-color:rgba(0,102,255,0.9);box-shadow:0 0 0 9999px rgba(10,16,40,0.6),0 0 30px rgba(0,102,255,0.5)}
+}
+
+.tour-popup{
+  position:fixed;z-index:8890;
+  background:rgba(255,255,255,0.97);
+  backdrop-filter:blur(20px);
+  border:1px solid rgba(255,255,255,0.95);
+  border-radius:18px;
+  padding:20px 22px;
+  max-width:300px;width:90%;
+  box-shadow:0 20px 60px rgba(0,66,204,0.2),0 2px 8px rgba(0,0,0,0.08);
+  transition:all .4s cubic-bezier(.34,1.56,.64,1);
+  pointer-events:all;
+}
+.tour-popup::before{
+  content:'';position:absolute;
+  width:12px;height:12px;
+  background:rgba(255,255,255,0.97);
+  border-left:1px solid rgba(255,255,255,0.95);
+  border-top:1px solid rgba(255,255,255,0.95);
+  transform:rotate(45deg);
+}
+.tour-popup.arrow-bottom::before{
+  bottom:-7px;left:28px;
+  border:none;
+  border-right:1px solid rgba(0,0,0,0.05);
+  border-bottom:1px solid rgba(0,0,0,0.05);
+}
+.tour-popup.arrow-top::before{
+  top:-7px;left:28px;
+  border-right:none;border-bottom:none;
+  border-left:1px solid rgba(0,0,0,0.05);
+  border-top:1px solid rgba(0,0,0,0.05);
+}
+.tour-popup.arrow-left::before{
+  left:-7px;top:22px;
+  border-right:none;border-top:none;
+  border-left:1px solid rgba(0,0,0,0.05);
+  border-bottom:1px solid rgba(0,0,0,0.05);
+}
+
+.tour-step-badge{
+  display:inline-flex;align-items:center;gap:5px;
+  font-family:var(--font-mono);font-size:9px;font-weight:700;
+  color:var(--blue);letter-spacing:1.5px;text-transform:uppercase;
+  padding:3px 10px;border-radius:50px;
+  background:var(--blue-xl);border:1px solid rgba(0,102,255,0.2);
+  margin-bottom:8px;
+}
+.tour-step-icon{font-size:14px;display:block;margin-bottom:6px}
+.tour-step-title{
+  font-size:14px;font-weight:800;color:var(--ink);
+  margin-bottom:5px;letter-spacing:-0.2px;
+}
+.tour-step-desc{
+  font-size:12px;color:var(--gray-600);line-height:1.6;
+  margin-bottom:14px;
+}
+.tour-step-desc strong{color:var(--ink);font-weight:600}
+
+.tour-controls{display:flex;align-items:center;gap:8px}
+.tour-btn-skip{
+  font-size:11px;color:var(--gray-400);background:none;border:none;
+  cursor:pointer;font-family:var(--font-sans);padding:6px 8px;
+  transition:color .2s;
+}
+.tour-btn-skip:hover{color:var(--gray-600)}
+.tour-btn-next{
+  flex:1;padding:8px 16px;border-radius:var(--radius-sm);
+  background:linear-gradient(135deg,var(--blue),var(--electric));
+  color:#fff;border:none;cursor:pointer;
+  font-family:var(--font-sans);font-size:12px;font-weight:700;
+  box-shadow:0 4px 14px rgba(0,102,255,0.35);
+  transition:all .2s cubic-bezier(.34,1.56,.64,1);
+}
+.tour-btn-next:hover{transform:translateY(-1px);box-shadow:0 6px 18px rgba(0,102,255,0.45)}
+
+.tour-dots{
+  display:flex;align-items:center;gap:4px;margin-left:auto;
+}
+.tour-dot{
+  width:5px;height:5px;border-radius:50%;
+  background:rgba(0,102,255,0.2);transition:all .25s;
+}
+.tour-dot.active{
+  background:var(--blue);width:14px;border-radius:3px;
+}
+
+/* ─── TOUR DONE TOAST ──────────────────────────────────── */
+.tour-toast{
+  position:fixed;bottom:28px;left:50%;
+  transform:translateX(-50%) translateY(80px);
+  background:linear-gradient(135deg,var(--blue),var(--cyan));
+  color:#fff;border-radius:50px;
+  padding:12px 28px;font-size:13px;font-weight:700;
+  box-shadow:0 8px 28px rgba(0,102,255,0.4);
+  z-index:9000;transition:transform .4s cubic-bezier(.34,1.56,.64,1);
+  display:flex;align-items:center;gap:8px;
+}
+.tour-toast.show{transform:translateX(-50%) translateY(0)}
 @keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
 .cursor{display:inline-block;width:2px;height:16px;background:var(--blue);vertical-align:text-bottom;animation:blink 1s step-end infinite;margin-left:1px}
 
@@ -884,6 +1312,75 @@ body::after{
 </head>
 <body>
 
+<!-- ══════════════════════════════════════════════════
+     WELCOME MODAL
+══════════════════════════════════════════════════ -->
+<div class="welcome-overlay" id="welcomeOverlay">
+  <div class="welcome-card">
+    <div class="welcome-agency">
+      <span class="welcome-agency-dot"></span>
+      NEXUS CREATIVE AGENCY
+      <span class="welcome-agency-dot"></span>
+    </div>
+
+    <div class="welcome-avatar">🧠</div>
+
+    <div class="welcome-greeting">Bienvenido, Profesor</div>
+    <div class="welcome-title">Jorge Alejandro<br><span>Solano Quesada</span></div>
+    <p class="welcome-subtitle">
+      Este tríptico interactivo fue creado especialmente para usted como entregable de <strong>Mercadeo II</strong>. Explore los 3 cerebros, la historia de la Agencia NEXUS y el laboratorio de neuromarketing.
+    </p>
+
+    <div class="welcome-actions">
+      <button class="btn-welcome-enter" onclick="enterDirect()">
+        🚀 Ingresar
+        <span>Explorar libremente</span>
+      </button>
+      <button class="btn-welcome-tour" onclick="startTour()">
+        🗺️ Vista Guiada
+        <span>Click aquí · Tour interactivo</span>
+      </button>
+    </div>
+
+    <div class="welcome-footer">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+      Elaborado por: <strong style="color:var(--ink)">Luis Diego Solís Ureña</strong> · Mercadeo II · 2026
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════
+     GUIDED TOUR ELEMENTS
+══════════════════════════════════════════════════ -->
+<div class="tour-highlight" id="tourHighlight" style="display:none"></div>
+<div class="tour-popup" id="tourPopup" style="display:none">
+  <div class="tour-step-badge" id="tourBadge">Paso 1 de 6</div>
+  <div class="tour-step-icon" id="tourIcon">📖</div>
+  <div class="tour-step-title" id="tourTitle">Título del paso</div>
+  <div class="tour-step-desc" id="tourDesc">Descripción del paso</div>
+  <div class="tour-controls">
+    <button class="tour-btn-skip" onclick="endTour()">Saltar tour</button>
+    <div class="tour-dots" id="tourDots"></div>
+    <button class="tour-btn-next" id="tourNextBtn" onclick="tourNext()">Siguiente →</button>
+  </div>
+</div>
+
+<!-- Tour done toast -->
+<div class="tour-toast" id="tourToast">
+  ✅ ¡Tour completado! Ya puedes explorar libremente.
+</div>
+<div class="page-shimmer" id="pageShimmer"></div>
+
+<!-- Masterclass Legend Top Banner -->
+<div class="masterclass-legend">
+  <div class="ml-icon">🎓</div>
+  <div class="ml-text"><span>Masterclass</span></div>
+  <div class="ml-sep">·</div>
+  <div class="ml-course">Teoría de los 3 Cerebros aplicada al Neuromarketing y la Estrategia Digital</div>
+  <div class="ml-sep">·</div>
+  <div class="ml-text"><span>Mercadeo II · 2026</span></div>
+</div>
+
 <div class="page">
 
   <!-- ══════════════════════════════════════════════════
@@ -892,7 +1389,8 @@ body::after{
   <header class="header">
     <div class="header-badge">
       <span class="badge-dot"></span>
-      Mercadeo II · Tríptico Digital Interactivo · Junio 2026
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+      Masterclass · Mercadeo II · Tríptico Digital Interactivo · Junio 2026
     </div>
     <h1 class="header-title">La Teoría de los 3 Cerebros</h1>
     <p class="header-subtitle">Masterclass de Neuromarketing y Estrategia Digital · Agencia NEXUS Creative</p>
@@ -909,15 +1407,15 @@ body::after{
        NAV TABS
   ══════════════════════════════════════════════════ -->
   <nav class="nav-tabs">
-    <button class="nav-tab active" onclick="showSection('triptico',this)">
+    <button class="nav-tab active" onclick="showSection('triptico',this)" data-tip="Ver los 6 paneles del tríptico">
       <svg class="nav-tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="18" rx="2"/><line x1="9" y1="3" x2="9" y2="21"/><line x1="15" y1="3" x2="15" y2="21"/></svg>
       Tríptico Digital
     </button>
-    <button class="nav-tab" onclick="showSection('story',this)">
+    <button class="nav-tab" onclick="showSection('story',this)" data-tip="Sigue la conversación de Sofía y Mateo">
       <svg class="nav-tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
       Modo Historia
     </button>
-    <button class="nav-tab" onclick="showSection('lab',this)">
+    <button class="nav-tab" onclick="showSection('lab',this)" data-tip="Explora los 3 cerebros interactivamente">
       <svg class="nav-tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3H5a2 2 0 0 0-2 2v4m6-6h10a2 2 0 0 1 2 2v4M9 3v18m0 0h10a2 2 0 0 0 2-2V9M9 21H5a2 2 0 0 1-2-2V9m0 0h18"/></svg>
       Laboratorio Interactivo
     </button>
@@ -929,19 +1427,20 @@ body::after{
   <section id="section-triptico" class="panel-section active">
 
     <!-- FLIP TOGGLE -->
-    <div style="display:flex;justify-content:center;margin-bottom:20px;gap:8px">
-      <button id="btn-exterior" onclick="flipTriptico('exterior')"
-        style="padding:9px 22px;border-radius:var(--radius-sm);font-size:12px;font-weight:700;border:1.5px solid rgba(0,102,255,0.3);background:linear-gradient(135deg,var(--blue),var(--electric));color:#fff;cursor:pointer;box-shadow:0 4px 14px rgba(0,102,255,0.3);font-family:var(--font-sans)">
-        ◑ Cara Exterior · Portada &amp; Conclusión
+    <div style="display:flex;justify-content:center;margin-bottom:20px;gap:10px">
+      <button id="btn-exterior" class="flip-btn flip-btn-active" onclick="flipTriptico('exterior')" data-tip="Portada, Conclusión y Plan Estratégico">
+        ◑ &nbsp;Cara Exterior · Portada &amp; Conclusión
       </button>
-      <button id="btn-interior" onclick="flipTriptico('interior')"
-        style="padding:9px 22px;border-radius:var(--radius-sm);font-size:12px;font-weight:700;border:1.5px solid rgba(0,102,255,0.15);background:rgba(255,255,255,0.7);color:var(--blue);cursor:pointer;font-family:var(--font-sans);backdrop-filter:blur(12px)">
-        ◐ Cara Interior · Desarrollo &amp; Teoría
+      <button id="btn-interior" class="flip-btn flip-btn-inactive" onclick="flipTriptico('interior')" data-tip="Historia, 3 Cerebros y Neuromarketing">
+        ◐ &nbsp;Cara Interior · Desarrollo &amp; Teoría
       </button>
     </div>
 
-    <!-- EXTERIOR FACE -->
-    <div id="face-exterior">
+    <!-- BOOK FLIP CONTAINER -->
+    <div class="flip-container">
+      <div class="flip-book" id="flipBook">
+      <!-- EXTERIOR FACE -->
+      <div id="face-exterior" class="flip-face">
       <div class="triptych">
         <!-- Flow SVG -->
         <svg class="flow-overlay" xmlns="http://www.w3.org/2000/svg" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:10">
@@ -1117,9 +1616,10 @@ body::after{
         </div>
       </div>
     </div>
+    </div><!-- /face-exterior -->
 
     <!-- INTERIOR FACE -->
-    <div id="face-interior" style="display:none">
+    <div id="face-interior" class="flip-face" style="display:none">
       <div class="triptych">
         <!-- PANEL I1: LA HISTORIA -->
         <div class="panel panel-1">
@@ -1503,27 +2003,52 @@ function showSection(id, btn){
   if(id==='lab'){renderBrainDetail('reptiliano');renderSlabDetail(0);}
 }
 
-/* ─── TRIPTYCH FLIP ───────────────────────────────────── */
+/* ─── TRIPTYCH FLIP WITH PAGE TURN ───────────────────── */
+let currentFace = 'exterior';
 function flipTriptico(face){
-  const extBtn=document.getElementById('btn-exterior');
-  const intBtn=document.getElementById('btn-interior');
-  const extFace=document.getElementById('face-exterior');
-  const intFace=document.getElementById('face-interior');
-  if(face==='exterior'){
-    extFace.style.display='block';intFace.style.display='none';
-    extBtn.style.background='linear-gradient(135deg,var(--blue),var(--electric))';
-    extBtn.style.color='#fff';extBtn.style.borderColor='rgba(0,102,255,0.3)';
-    extBtn.style.boxShadow='0 4px 14px rgba(0,102,255,0.3)';
-    intBtn.style.background='rgba(255,255,255,0.7)';
-    intBtn.style.color='var(--blue)';intBtn.style.boxShadow='none';
+  if(face === currentFace) return;
+  const extBtn  = document.getElementById('btn-exterior');
+  const intBtn  = document.getElementById('btn-interior');
+  const extFace = document.getElementById('face-exterior');
+  const intFace = document.getElementById('face-interior');
+  const shimmer = document.getElementById('pageShimmer');
+
+  // Shimmer effect
+  shimmer.classList.remove('active');
+  void shimmer.offsetWidth;
+  shimmer.classList.add('active');
+
+  if(face === 'interior'){
+    // Exterior exits left, interior enters from right
+    extFace.classList.add('anim-exit-left');
+    setTimeout(()=>{
+      extFace.style.display = 'none';
+      extFace.classList.remove('anim-exit-left');
+      intFace.style.display = 'block';
+      intFace.classList.add('anim-enter-right');
+      setTimeout(()=> intFace.classList.remove('anim-enter-right'), 450);
+    }, 360);
+
+    intBtn.className = 'flip-btn flip-btn-active';
+    extBtn.className = 'flip-btn flip-btn-inactive';
+
   } else {
-    extFace.style.display='none';intFace.style.display='block';
-    intBtn.style.background='linear-gradient(135deg,var(--blue),var(--electric))';
-    intBtn.style.color='#fff';intBtn.style.borderColor='rgba(0,102,255,0.3)';
-    intBtn.style.boxShadow='0 4px 14px rgba(0,102,255,0.3)';
-    extBtn.style.background='rgba(255,255,255,0.7)';
-    extBtn.style.color='var(--blue)';extBtn.style.boxShadow='none';
+    // Interior exits right, exterior enters from left
+    intFace.classList.add('anim-exit-right');
+    setTimeout(()=>{
+      intFace.style.display = 'none';
+      intFace.classList.remove('anim-exit-right');
+      extFace.style.display = 'block';
+      extFace.classList.add('anim-enter-left');
+      setTimeout(()=> extFace.classList.remove('anim-enter-left'), 450);
+    }, 360);
+
+    extBtn.className = 'flip-btn flip-btn-active';
+    intBtn.className = 'flip-btn flip-btn-inactive';
   }
+
+  currentFace = face;
+  setTimeout(()=> shimmer.classList.remove('active'), 800);
 }
 
 /* ─── STORY MODE ──────────────────────────────────────── */
@@ -1648,6 +2173,243 @@ function selectSurvival(idx,el){
 // Initial lab render
 renderBrainDetail('reptiliano');
 renderSlabDetail(0);
+
+/* ══════════════════════════════════════════════════
+   WELCOME MODAL
+══════════════════════════════════════════════════ */
+function enterDirect(){
+  const overlay = document.getElementById('welcomeOverlay');
+  overlay.classList.add('hiding');
+  setTimeout(()=>{ overlay.style.display='none'; }, 420);
+}
+
+/* ══════════════════════════════════════════════════
+   GUIDED TOUR
+══════════════════════════════════════════════════ */
+const TOUR_STEPS = [
+  {
+    targetId: null,
+    icon: '👋',
+    title: 'Bienvenido al Tríptico Digital',
+    desc: 'Este proyecto interactivo tiene <strong>3 secciones principales</strong>: el Tríptico, el Modo Historia y el Laboratorio. Le guiaré por cada una. ¡Empecemos!',
+    position: 'center',
+    arrow: null,
+  },
+  {
+    targetId: 'navTabsEl',
+    icon: '🧭',
+    title: 'Barra de Navegación Principal',
+    desc: 'Aquí encontrará los <strong>3 módulos</strong> del proyecto. Haga clic en cualquiera para cambiar de sección. El activo se marca en azul con efecto degradado.',
+    position: 'below',
+    arrow: 'arrow-top',
+  },
+  {
+    targetId: 'flipBtns',
+    icon: '📖',
+    title: 'Voltear el Tríptico',
+    desc: 'El tríptico tiene <strong>dos caras</strong> como un plegable real. Al hacer clic cambia con un <strong>efecto de vuelta de hoja</strong>. Pruébelo después del tour.',
+    position: 'below',
+    arrow: 'arrow-top',
+  },
+  {
+    targetId: 'section-story',
+    icon: '💬',
+    title: 'Modo Historia',
+    desc: '<strong>Sofía</strong> (Directora Creativa) y <strong>Mateo</strong> (Junior) desarrollan una conversación de 10 diálogos que explica todos los conceptos del curso. Tiene reproducción automática.',
+    position: 'center',
+    arrow: null,
+    beforeStep: ()=>{ showSection('story', document.querySelectorAll('.nav-tab')[1]); }
+  },
+  {
+    targetId: 'storyCard',
+    icon: '🎭',
+    title: 'Tarjeta de Diálogo',
+    desc: 'Cada diálogo muestra el <strong>personaje, su rol y el concepto clave</strong> que está explicando. Use los botones <em>Anterior / Siguiente</em> o active la reproducción automática.',
+    position: 'above',
+    arrow: 'arrow-bottom',
+  },
+  {
+    targetId: 'labHeroEl',
+    icon: '🔬',
+    title: 'Laboratorio Interactivo',
+    desc: 'Seleccione cada <strong>cerebro</strong> para ver sus características, tips de marketing y ejemplos reales. También puede explorar los <strong>8 Botones de Supervivencia</strong>.',
+    position: 'below',
+    arrow: 'arrow-top',
+    beforeStep: ()=>{ showSection('lab', document.querySelectorAll('.nav-tab')[2]); }
+  },
+  {
+    targetId: 'brainSelectorEl',
+    icon: '🧠',
+    title: 'Selector de Cerebros',
+    desc: 'Haga clic en <strong>Reptiliano, Límbico o Neocórtex</strong> para explorar cada uno. Verá su peso en la decisión de compra, tips de marketing y un ejemplo de anuncio real.',
+    position: 'below',
+    arrow: 'arrow-top',
+  },
+];
+
+let tourStep = 0;
+let tourActive = false;
+
+function startTour(){
+  enterDirect();
+  tourActive = true;
+  tourStep = 0;
+
+  // reset to triptico view
+  showSection('triptico', document.querySelectorAll('.nav-tab')[0]);
+
+  setTimeout(()=>{
+    document.getElementById('tourHighlight').style.display='block';
+    document.getElementById('tourPopup').style.display='block';
+    buildTourDots();
+    renderTourStep(tourStep);
+  }, 450);
+}
+
+function buildTourDots(){
+  const dotsEl = document.getElementById('tourDots');
+  dotsEl.innerHTML = TOUR_STEPS.map((_,i)=>
+    `<div class="tour-dot ${i===0?'active':''}" id="dot-${i}"></div>`
+  ).join('');
+}
+
+function updateDots(idx){
+  document.querySelectorAll('.tour-dot').forEach((d,i)=>{
+    d.classList.toggle('active', i===idx);
+  });
+}
+
+function getTargetRect(id){
+  if(!id) return null;
+  const el = document.getElementById(id);
+  if(!el) return null;
+  const r = el.getBoundingClientRect();
+  return { top:r.top, left:r.left, width:r.width, height:r.height, bottom:r.bottom, right:r.right };
+}
+
+function renderTourStep(idx){
+  const step = TOUR_STEPS[idx];
+  const hl = document.getElementById('tourHighlight');
+  const popup = document.getElementById('tourPopup');
+  const isLast = idx === TOUR_STEPS.length - 1;
+
+  // Run beforeStep if defined
+  if(step.beforeStep) step.beforeStep();
+
+  // Update content
+  document.getElementById('tourBadge').textContent = `Paso ${idx+1} de ${TOUR_STEPS.length}`;
+  document.getElementById('tourIcon').textContent = step.icon;
+  document.getElementById('tourTitle').textContent = step.title;
+  document.getElementById('tourDesc').innerHTML = step.desc;
+  document.getElementById('tourNextBtn').textContent = isLast ? '¡Finalizar! 🎉' : 'Siguiente →';
+  updateDots(idx);
+
+  const pad = 10;
+
+  setTimeout(()=>{
+    if(step.position === 'center' || !step.targetId){
+      // Center popup, no highlight
+      hl.style.display = 'none';
+      popup.className = 'tour-popup';
+      popup.style.top = '50%';
+      popup.style.left = '50%';
+      popup.style.transform = 'translate(-50%, -50%)';
+      popup.style.bottom = 'auto';
+      popup.style.right = 'auto';
+    } else {
+      const rect = getTargetRect(step.targetId);
+      if(!rect){
+        hl.style.display='none';
+      } else {
+        // Position highlight
+        hl.style.display = 'block';
+        hl.style.top = (rect.top - pad) + 'px';
+        hl.style.left = (rect.left - pad) + 'px';
+        hl.style.width = (rect.width + pad*2) + 'px';
+        hl.style.height = (rect.height + pad*2) + 'px';
+
+        // Position popup
+        popup.className = 'tour-popup ' + (step.arrow || '');
+        popup.style.transform = '';
+
+        const popupW = 300;
+        const popupH = 200;
+        const vw = window.innerWidth;
+        const vh = window.innerHeight;
+
+        let ptop, pleft;
+
+        if(step.position === 'below'){
+          ptop = rect.bottom + pad + 14;
+          pleft = Math.max(10, Math.min(rect.left, vw - popupW - 10));
+        } else if(step.position === 'above'){
+          ptop = rect.top - popupH - pad - 14;
+          pleft = Math.max(10, Math.min(rect.left, vw - popupW - 10));
+          if(ptop < 10){ ptop = rect.bottom + pad + 14; popup.className = 'tour-popup arrow-top'; }
+        } else {
+          ptop = rect.top;
+          pleft = rect.right + pad + 14;
+          if(pleft + popupW > vw){ pleft = rect.left - popupW - pad - 14; }
+        }
+
+        popup.style.top = Math.max(10, Math.min(ptop, vh - popupH - 10)) + 'px';
+        popup.style.left = Math.max(10, pleft) + 'px';
+        popup.style.bottom = 'auto';
+        popup.style.right = 'auto';
+
+        // Scroll target into view
+        const el = document.getElementById(step.targetId);
+        if(el) el.scrollIntoView({behavior:'smooth', block:'center'});
+      }
+    }
+  }, step.beforeStep ? 600 : 50);
+}
+
+function tourNext(){
+  if(tourStep < TOUR_STEPS.length - 1){
+    tourStep++;
+    renderTourStep(tourStep);
+  } else {
+    endTour();
+  }
+}
+
+function endTour(){
+  tourActive = false;
+  document.getElementById('tourHighlight').style.display='none';
+  document.getElementById('tourPopup').style.display='none';
+
+  // Show toast
+  const toast = document.getElementById('tourToast');
+  toast.classList.add('show');
+  setTimeout(()=>{
+    toast.classList.remove('show');
+    // Return to triptico view
+    showSection('triptico', document.querySelectorAll('.nav-tab')[0]);
+  }, 3200);
+}
+
+// Add IDs to key elements for tour targeting
+window.addEventListener('DOMContentLoaded',()=>{
+  // Nav tabs wrapper
+  const nav = document.querySelector('.nav-tabs');
+  if(nav) nav.id = 'navTabsEl';
+
+  // Flip buttons wrapper
+  const flipDiv = document.querySelector('.flip-btn')?.parentElement;
+  if(flipDiv) flipDiv.id = 'flipBtns';
+
+  // Story card
+  // already has id="storyCard"
+
+  // Lab hero
+  const labHero = document.querySelector('.lab-hero');
+  if(labHero) labHero.id = 'labHeroEl';
+
+  // Brain selector grid
+  const brainSel = document.querySelector('.brain-selector-grid');
+  if(brainSel) brainSel.id = 'brainSelectorEl';
+});
 </script>
 </body>
 </html>
